@@ -32,7 +32,7 @@ class TimeCountState extends State<TimeCount> {
           if (_count == 0) {
             _timer.cancel();
             //重置为工作状态
-            resetToWorkTime();
+            _resetToWorkTime();
             //发送消息
             TimeCountNotification(signal: false).dispatch(context);
             return;
@@ -50,7 +50,7 @@ class TimeCountState extends State<TimeCount> {
           if (_count == 0) {
             _timer.cancel();
             //进入休息状态
-            relaxTime();
+            _relaxTime();
             //发送消息
             TimeCountNotification(signal: true).dispatch(context);
             return;
@@ -85,7 +85,7 @@ class TimeCountState extends State<TimeCount> {
   }
 
   //休息状态设置
-  void relaxTime() {
+  void _relaxTime() {
     setState(() {
       _relaxTimeState = true;
       _count = _relaxTimeCount;
@@ -95,7 +95,7 @@ class TimeCountState extends State<TimeCount> {
   }
 
   //重设为工作状态
-  void resetToWorkTime() {
+  void _resetToWorkTime() {
     _count = _workTimeCount;
     _relaxTimeState = false;
     _note = "长按结束";
@@ -107,7 +107,7 @@ class TimeCountState extends State<TimeCount> {
   void cancelTime() {
     if (_relaxTimeState) {
       _timer.cancel();
-      resetToWorkTime();
+      _resetToWorkTime();
       return;
     }
     _timer.cancel();
