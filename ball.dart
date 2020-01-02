@@ -30,9 +30,9 @@ class _BallState extends State<Ball> {
 
   void _relaxAnimated() {
     setState(() {
-      _color1 = Colors.lightGreenAccent;
-      _color2 = Colors.green;
-      _shadowC = Colors.green;
+      _color1 = Colors.cyanAccent;
+      _color2 = Colors.cyan;
+      _shadowC = Colors.cyan[300];
     });
   }
 

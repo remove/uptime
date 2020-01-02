@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uptime/bottombar.dart';
 import 'package:uptime/ball.dart';
+import 'package:uptime/bottombutton.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +25,8 @@ class AppHome extends StatefulWidget {
 
 class _MyAppState extends State<AppHome> {
   final double _top = 50;
+  final double _bottom = 50;
+  final String _title = "Aero";
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +34,26 @@ class _MyAppState extends State<AppHome> {
       child: Container(
         color: Colors.white,
         child: Padding(
-          padding: EdgeInsets.only(top: _top),
-          child: Stack(
+          padding: EdgeInsets.only(top: _top, bottom: _bottom),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 20, top: 5),
                 child: Text(
-                  "番茄钟",
+                  _title,
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              Center(
-                child: Ball(),
-              )
+              Expanded(
+                child: Center(
+                  child: Ball(),
+                ),
+              ),
+              BottomBar()
             ],
           ),
         ),
