@@ -6,36 +6,95 @@ class TimeButton extends StatefulWidget {
   _TimeButtonState createState() => _TimeButtonState();
 }
 
-class _TimeButtonState extends State<TimeButton> {
+class _TimeButtonState extends State<TimeButton> with WidgetsBindingObserver {
   double _shadow = 3;
   double _radius = 8;
   double _light = 1;
   double _offset = 0;
+  bool _dark;
 
   void _onTapDown(TapDownDetails details) {
-    setState(() {
-      _shadow = 0;
-      _radius = 0;
-      _light = 0;
-      _offset = 2;
-    });
+    if (_dark) {
+      setState(() {
+        _radius = 0;
+        _light = 0;
+      });
+    } else {
+      setState(() {
+        _shadow = 0;
+        _radius = 0;
+        _light = 0;
+        _offset = 2;
+      });
+    }
   }
 
   void _onTapUp(TapUpDetails details) {
-    setState(() {
-      _shadow = 3;
-      _radius = 8;
-      _light = 1;
-      _offset = 0;
-    });
+    if (_dark) {
+      setState(() {
+        _radius = 30;
+        _light = 1;
+      });
+    } else {
+      setState(() {
+        _shadow = 3;
+        _radius = 8;
+        _light = 1;
+        _offset = 0;
+      });
+    }
   }
 
   void _onTapCancel() {
+    if (_dark) {
+      setState(() {
+        _radius = 30;
+        _light = 1;
+      });
+    } else {
+      setState(() {
+        _shadow = 3;
+        _radius = 8;
+        _light = 1;
+        _offset = 0;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    final Brightness brightness =
+        WidgetsBinding.instance.window.platformBrightness;
     setState(() {
-      _shadow = 3;
-      _radius = 8;
-      _light = 1;
-      _offset = 0;
+      if (brightness == Brightness.dark) {
+        _dark = true;
+        setState(() {
+          _shadow = 0;
+          _radius = 30;
+          _light = 1;
+          _offset = 0;
+        });
+      } else if (brightness == Brightness.light) {
+        _dark = false;
+        setState(() {
+          _shadow = 3;
+          _radius = 8;
+          _light = 1;
+          _offset = 0;
+        });
+      }
     });
   }
 
@@ -84,36 +143,96 @@ class AnalysisButton extends StatefulWidget {
   _AnalysisButtonState createState() => _AnalysisButtonState();
 }
 
-class _AnalysisButtonState extends State<AnalysisButton> {
+class _AnalysisButtonState extends State<AnalysisButton>
+    with WidgetsBindingObserver {
   double _shadow = 3;
   double _radius = 8;
   double _light = 1;
   double _offset = 0;
+  bool _dark;
 
   void _onTapDown(TapDownDetails details) {
-    setState(() {
-      _shadow = 0;
-      _radius = 0;
-      _light = 0;
-      _offset = 2;
-    });
+    if (_dark) {
+      setState(() {
+        _radius = 0;
+        _light = 0;
+      });
+    } else {
+      setState(() {
+        _shadow = 0;
+        _radius = 0;
+        _light = 0;
+        _offset = 2;
+      });
+    }
   }
 
   void _onTapUp(TapUpDetails details) {
-    setState(() {
-      _shadow = 3;
-      _radius = 8;
-      _light = 1;
-      _offset = 0;
-    });
+    if (_dark) {
+      setState(() {
+        _radius = 30;
+        _light = 1;
+      });
+    } else {
+      setState(() {
+        _shadow = 3;
+        _radius = 8;
+        _light = 1;
+        _offset = 0;
+      });
+    }
   }
 
   void _onTapCancel() {
+    if (_dark) {
+      setState(() {
+        _radius = 30;
+        _light = 1;
+      });
+    } else {
+      setState(() {
+        _shadow = 3;
+        _radius = 8;
+        _light = 1;
+        _offset = 0;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    final Brightness brightness =
+        WidgetsBinding.instance.window.platformBrightness;
     setState(() {
-      _shadow = 3;
-      _radius = 8;
-      _light = 1;
-      _offset = 0;
+      if (brightness == Brightness.dark) {
+        _dark = true;
+        setState(() {
+          _shadow = 0;
+          _radius = 30;
+          _light = 1;
+          _offset = 0;
+        });
+      } else if (brightness == Brightness.light) {
+        _dark = false;
+        setState(() {
+          _shadow = 3;
+          _radius = 8;
+          _light = 1;
+          _offset = 0;
+        });
+      }
     });
   }
 

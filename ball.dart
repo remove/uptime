@@ -7,7 +7,10 @@ class Ball extends StatefulWidget {
   _BallState createState() => _BallState();
 }
 
-class _BallState extends State<Ball> {
+class _BallState extends State<Ball> with WidgetsBindingObserver {
+  double _radius = 13;
+  double _offsetX = 2;
+  double _offsetY = 5;
   double _boxHeight = 250;
   double _boxWidth = 250;
   Color _color1 = Colors.orange[300];
@@ -56,6 +59,39 @@ class _BallState extends State<Ball> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    final Brightness brightness =
+        WidgetsBinding.instance.window.platformBrightness;
+    setState(() {
+      if (brightness == Brightness.dark) {
+        setState(() {
+          _radius = 60;
+          _offsetX = 0;
+          _offsetY = 0;
+        });
+      } else if (brightness == Brightness.light) {
+        setState(() {
+          _radius = 13;
+          _offsetX = 2;
+          _offsetY = 5;
+        });
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return NotificationListener<TimeCountNotification>(
       onNotification: (onNotification) {
@@ -69,46 +105,46 @@ class _BallState extends State<Ball> {
         return false;
       },
       child: GestureDetector(
-          //判断是否计时状态
-          onTap: () {
-            if (!_play) {
-              //开始计时
-              _globalKey.currentState.startTime();
-              _startAnimated();
-              _play = true;
-            }
-          },
-          onLongPress: () {
-            //取消计时
-            _globalKey.currentState.cancelTime();
-            _cancelAnimated();
-            _play = false;
-          },
-          child: AnimatedContainer(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(300)),
-              gradient: RadialGradient(
-                colors: [_color1, _color2],
-                center: Alignment.topLeft,
-                radius: 1.3,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: _shadowC,
-                  blurRadius: 12,
-                  offset: Offset(2, 5),
-                )
-              ],
+        //判断是否计时状态
+        onTap: () {
+          if (!_play) {
+            //开始计时
+            _globalKey.currentState.startTime();
+            _startAnimated();
+            _play = true;
+          }
+        },
+        onLongPress: () {
+          //取消计时
+          _globalKey.currentState.cancelTime();
+          _cancelAnimated();
+          _play = false;
+        },
+        child: AnimatedContainer(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(300)),
+            gradient: RadialGradient(
+              colors: [_color1, _color2],
+              center: Alignment.topLeft,
+              radius: 1.3,
             ),
-            duration: Duration(milliseconds: 1000),
-            curve: Curves.elasticOut,
-            height: _boxHeight,
-            width: _boxWidth,
-            child: TimeCount(
-              key: _globalKey,
-            ),
+            boxShadow: [
+              BoxShadow(
+                color: _shadowC,
+                blurRadius: _radius,
+                offset: Offset(_offsetX, _offsetY),
+              )
+            ],
+          ),
+          duration: Duration(milliseconds: 1000),
+          curve: Curves.elasticOut,
+          height: _boxHeight,
+          width: _boxWidth,
+          child: TimeCount(
+            key: _globalKey,
           ),
         ),
+      ),
     );
   }
 }

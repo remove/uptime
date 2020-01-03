@@ -1,15 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:uptime/bottombar.dart';
 import 'package:uptime/ball.dart';
-import 'package:uptime/bottombutton.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
       initialRoute: "/",
       routes: {
         "/": (context) => AppHome(),
@@ -30,9 +36,8 @@ class _MyAppState extends State<AppHome> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: Container(
-        color: Colors.white,
+    return Scaffold(
+      body: Container(
         child: Padding(
           padding: EdgeInsets.only(top: _top, bottom: _bottom),
           child: Column(
