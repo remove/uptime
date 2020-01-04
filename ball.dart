@@ -8,12 +8,12 @@ class Ball extends StatefulWidget {
 }
 
 class _BallState extends State<Ball> with WidgetsBindingObserver {
-  double _radius = 13;
-  double _offsetX = 2;
-  double _offsetY = 5;
-  double _boxHeight = 250;
-  double _boxWidth = 250;
-  Color _color1 = Colors.orange[300];
+  double _radius = 13.0;
+  double _offsetX = 3.0;
+  double _offsetY = 5.0;
+  double _boxHeight = 250.0;
+  double _boxWidth = 250.0;
+  Color _color1 = Colors.yellow[700];
   Color _color2 = Colors.deepOrange;
   Color _shadowC = Colors.deepOrange[500];
   bool _play = false;
@@ -23,9 +23,9 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
   //启动动画
   void _startAnimated() {
     setState(() {
-      _color1 = Colors.orange;
+      _color1 = Colors.orangeAccent;
       _color2 = Colors.red;
-      _shadowC = Colors.deepOrange[500];
+      _shadowC = Colors.red;
       _boxWidth = 330;
       _boxHeight = 330;
     });
@@ -42,15 +42,15 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
   void _cancelAnimated() {
     if (_relaxTime) {
       setState(() {
-        _color1 = Colors.orange[300];
-        _color2 = Colors.deepOrange;
-        _shadowC = Colors.deepOrange[500];
+        _color1 = Colors.orangeAccent;
+        _color2 = Colors.red;
+        _shadowC = Colors.red;
         _relaxTime = false;
       });
       return;
     }
     setState(() {
-      _color1 = Colors.orange[300];
+      _color1 = Colors.yellow[700];
       _color2 = Colors.deepOrange;
       _shadowC = Colors.deepOrange[500];
       _boxWidth = 250;
@@ -84,7 +84,7 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
       } else if (brightness == Brightness.light) {
         setState(() {
           _radius = 13;
-          _offsetX = 2;
+          _offsetX = 3;
           _offsetY = 5;
         });
       }
@@ -126,7 +126,7 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
             gradient: RadialGradient(
               colors: [_color1, _color2],
               center: Alignment.topLeft,
-              radius: 1.3,
+              radius: 1.1,
             ),
             boxShadow: [
               BoxShadow(
