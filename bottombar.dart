@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:uptime/bottombutton.dart';
 
 class BottomBar extends StatelessWidget {
+  BottomBar({
+    @required this.onPress1,
+    @required this.onPress2,
+  });
+
+  final Function onPress1;
+  final Function onPress2;
+
   @override
   Widget build(BuildContext context) {
     return Flex(
@@ -14,7 +22,9 @@ class BottomBar extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                TimeButton(),
+                TimeButton(
+                  onPress: onPress1,
+                ),
                 Positioned(
                   top: 51,
                   child: Text(
@@ -32,11 +42,13 @@ class BottomBar extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                AnalysisButton(),
+                AnalysisButton(
+                  onPress: onPress2,
+                ),
                 Positioned(
                   top: 51,
                   child: Text(
-                    "统计",
+                    "任务",
                     style: TextStyle(color: Colors.blue[300], fontSize: 12),
                   ),
                 )

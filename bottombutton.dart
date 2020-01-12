@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TimeButton extends StatefulWidget {
+  TimeButton({@required this.onPress});
+
+  final Function onPress;
+
   @override
   _TimeButtonState createState() => _TimeButtonState();
 }
@@ -11,7 +15,7 @@ class _TimeButtonState extends State<TimeButton> with WidgetsBindingObserver {
   double _radius = 8;
   double _light = 1;
   double _offset = 0;
-  bool _dark;
+  bool _dark = false;
 
   void _onTapDown(TapDownDetails details) {
     if (_dark) {
@@ -103,6 +107,7 @@ class _TimeButtonState extends State<TimeButton> with WidgetsBindingObserver {
     return Column(
       children: <Widget>[
         GestureDetector(
+          onTap: widget.onPress,
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
           onTapCancel: _onTapCancel,
@@ -139,6 +144,10 @@ class _TimeButtonState extends State<TimeButton> with WidgetsBindingObserver {
 }
 
 class AnalysisButton extends StatefulWidget {
+  AnalysisButton({@required this.onPress});
+
+  final Function onPress;
+
   @override
   _AnalysisButtonState createState() => _AnalysisButtonState();
 }
@@ -149,7 +158,7 @@ class _AnalysisButtonState extends State<AnalysisButton>
   double _radius = 8;
   double _light = 1;
   double _offset = 0;
-  bool _dark;
+  bool _dark = false;
 
   void _onTapDown(TapDownDetails details) {
     if (_dark) {
@@ -241,6 +250,7 @@ class _AnalysisButtonState extends State<AnalysisButton>
     return Column(
       children: <Widget>[
         GestureDetector(
+          onTap: widget.onPress,
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
           onTapCancel: _onTapCancel,
@@ -264,7 +274,7 @@ class _AnalysisButtonState extends State<AnalysisButton>
             ),
             child: Center(
               child: Icon(
-                Icons.assessment,
+                Icons.view_list,
                 color: Colors.white,
                 size: 30,
               ),

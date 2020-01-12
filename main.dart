@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uptime/TaskTabRoute.dart';
 import 'package:uptime/bottombar.dart';
-import 'package:uptime/ball.dart';
+import 'package:uptime/timeConuntPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,38 +31,31 @@ class AppHome extends StatefulWidget {
 }
 
 class _MyAppState extends State<AppHome> {
-  final double _top = 50;
-  final double _bottom = 50;
-  final String _title = "Aero";
+  List _bodyList = [TimeCountPage(), TaskTabRoute()];
+  int _index = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.only(top: _top, bottom: _bottom),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 5),
-                child: Text(
-                  _title,
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: Ball(),
-                ),
-              ),
-              BottomBar()
-            ],
-          ),
-        ),
+      body: Column(
+        children: <Widget>[
+          _bodyList[_index],
+          Padding(
+            padding: EdgeInsets.only(bottom: 50),
+            child: BottomBar(
+              onPress1: () {
+                setState(() {
+                  _index = 0;
+                });
+              },
+              onPress2: () {
+                setState(() {
+                  _index = 1;
+                });
+              },
+            ),
+          )
+        ],
       ),
     );
   }
