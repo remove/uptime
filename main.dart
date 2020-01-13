@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uptime/TaskTabRoute.dart';
-import 'package:uptime/bottombar.dart';
+import 'package:uptime/taskTabRoute.dart';
+import 'package:uptime/bottomBar.dart';
 import 'package:uptime/timeConuntPage.dart';
 
 void main() => runApp(MyApp());

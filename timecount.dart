@@ -17,8 +17,8 @@ class TimeCountState extends State<TimeCount> {
   bool _relaxTimeState = false;
   bool _visible = false;
   bool _pause = false;
-  int _workTimeCount = 5;
-  int _relaxTimeCount = 3;
+  int _workTimeCount = 30;
+  int _relaxTimeCount = 10;
 
   String _note = "长按结束";
 

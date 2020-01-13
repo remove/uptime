@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:uptime/taskModel.dart';
 
-class ListContainer extends StatelessWidget {
+class ListContainer extends StatefulWidget {
   ListContainer({this.index});
 
   final int index;
 
+  @override
+  _ListContainerState createState() => _ListContainerState();
+}
+
+class _ListContainerState extends State<ListContainer> {
   final List<Color> _colors = [Colors.yellow[200], Colors.yellow[700]];
+  String _title = "";
+  String _flag = "";
+  String _done = "";
+  String _notification = "";
+  String _endDate = "";
+  String _note = "";
+
+  @override
+  void initState() {
+    TaskModel(index: widget.index).getData().then((list) {
+      setState(() {
+        _title = list[0];
+        _flag = list[1];
+        _done = list[2];
+        _notification = list[3];
+        _endDate = list[4];
+        _note = list[5];
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +63,18 @@ class ListContainer extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          Text("标题", style: TextStyle(fontSize: 20, color: Colors.black54)),
+          SizedBox(
+            height: 30,
+            child: Text(_title,
+                style: TextStyle(fontSize: 20, color: Colors.black54)),
+          ),
           Container(
             child: Row(
               children: <Widget>[
                 Icon(Icons.flag, color: Colors.black54, size: 20),
                 Text("今天目标", style: TextStyle(color: Colors.black54)),
                 Expanded(child: SizedBox()),
-                Text("1/5", style: TextStyle(color: Colors.black54)),
+                Text(_flag, style: TextStyle(color: Colors.black54)),
               ],
             ),
           ),
@@ -54,7 +85,7 @@ class ListContainer extends StatelessWidget {
                 Icon(Icons.timer, color: Colors.black54, size: 20),
                 Text("总计完成", style: TextStyle(color: Colors.black54)),
                 Expanded(child: SizedBox()),
-                Text("20/100", style: TextStyle(color: Colors.black54)),
+                Text(_done, style: TextStyle(color: Colors.black54)),
               ],
             ),
           ),
@@ -65,7 +96,7 @@ class ListContainer extends StatelessWidget {
                 Icon(Icons.notifications, color: Colors.black54, size: 20),
                 Text("重复提醒", style: TextStyle(color: Colors.black54)),
                 Expanded(child: SizedBox()),
-                Text("每天", style: TextStyle(color: Colors.black54)),
+                Text(_notification, style: TextStyle(color: Colors.black54)),
               ],
             ),
           ),
@@ -76,7 +107,7 @@ class ListContainer extends StatelessWidget {
                 Icon(Icons.date_range, color: Colors.black54, size: 20),
                 Text("结束日期", style: TextStyle(color: Colors.black54)),
                 Expanded(child: SizedBox()),
-                Text("2020.2.1", style: TextStyle(color: Colors.black54)),
+                Text(_endDate, style: TextStyle(color: Colors.black54)),
               ],
             ),
           ),
@@ -84,7 +115,7 @@ class ListContainer extends StatelessWidget {
               overflow: TextOverflow.fade,
               maxLines: 1,
               style: TextStyle(color: Colors.black54)),
-          Text("这里是备注，天天学习！努力向上！", style: TextStyle(color: Colors.black54))
+          Text(_note, style: TextStyle(color: Colors.black54))
         ],
       ),
     );
