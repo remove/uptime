@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uptime/timecount.dart';
+import 'package:uptime/timeCount.dart';
 
 class Ball extends StatefulWidget {
   @override
