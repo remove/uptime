@@ -147,7 +147,7 @@ class _TaskEditState extends State<TaskEdit> {
                 color: Colors.redAccent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
-                onPressed: () {},
+                onPressed: _delData,
                 child: Icon(
                   Icons.delete_forever,
                   color: Colors.white,
@@ -239,5 +239,9 @@ class _TaskEditState extends State<TaskEdit> {
             endDate: _date.toString().substring(0,10),
             note: "好好学习！")
         .saveData();
+  }
+
+  _delData(){
+    return TaskModel(index: widget.index).delData();
   }
 }

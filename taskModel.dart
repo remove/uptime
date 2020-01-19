@@ -31,4 +31,9 @@ class TaskModel {
     List<String> data = sharedPreferences.getStringList("$index");
     return data;
   }
+
+  delData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove("$index");
+  }
 }
