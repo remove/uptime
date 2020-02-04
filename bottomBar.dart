@@ -6,10 +6,12 @@ class BottomBar extends StatelessWidget {
   BottomBar({
     @required this.onPress1,
     @required this.onPress2,
+    @required this.onPress3,
   });
 
   final Function onPress1;
   final Function onPress2;
+  final Function onPress3;
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +45,15 @@ class BottomBar extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                TaskButton(
+                AnalyticsButton(
                   onPress: onPress2,
                 ),
                 Positioned(
                   top: 51,
                   child: Text(
-                    "任务",
-                    style: TextStyle(color: Colors.blue[300], fontSize: 12),
+                    "统计",
+                    style: TextStyle(
+                        color: Colors.purpleAccent[100], fontSize: 12),
                   ),
                 )
               ],
@@ -63,15 +66,14 @@ class BottomBar extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                AnalyticsButton(
-                  onPress: onPress2,
+                TaskButton(
+                  onPress: onPress3,
                 ),
                 Positioned(
                   top: 51,
                   child: Text(
-                    "统计",
-                    style: TextStyle(
-                        color: Colors.purpleAccent[100], fontSize: 12),
+                    "任务",
+                    style: TextStyle(color: Colors.blue[300], fontSize: 12),
                   ),
                 )
               ],

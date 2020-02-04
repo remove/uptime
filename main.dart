@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uptime/analyticsPage/analyticsTabRoute.dart';
 import 'package:uptime/taskPage/taskTabRoute.dart';
 import 'package:uptime/bottomBar.dart';
 import 'package:uptime/timeCountPage/timeConuntPage.dart';
@@ -31,7 +32,7 @@ class AppHome extends StatefulWidget {
 }
 
 class _MyAppState extends State<AppHome> {
-  List _bodyList = [TimeCountPage(), TaskTabRoute()];
+  List _bodyList = [TimeCountPage(), AnalyticsTabRoute(), TaskTabRoute()];
   int _index = 0;
 
   @override
@@ -51,6 +52,11 @@ class _MyAppState extends State<AppHome> {
               onPress2: () {
                 setState(() {
                   _index = 1;
+                });
+              },
+              onPress3: () {
+                setState(() {
+                  _index = 2;
                 });
               },
             ),
