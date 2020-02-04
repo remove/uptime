@@ -1,23 +1,42 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uptime/taskModel.dart';
+import 'package:uptime/model/taskModel.dart';
 
 class TaskEdit extends StatefulWidget {
   TaskEdit({
     @required this.index,
+    @required this.callback,
+    @required this.refresh,
+    @required this.newTask,
   });
 
   final int index;
+  final Function callback;
+  final Function refresh;
+  final bool newTask;
 
   @override
   _TaskEditState createState() => _TaskEditState();
 }
 
 class _TaskEditState extends State<TaskEdit> {
+  TextEditingController _title = TextEditingController();
   TextEditingController _dailyTarget = TextEditingController();
   TextEditingController _totalTarget = TextEditingController();
+  TextEditingController _note = TextEditingController();
   String _notification = "每天";
   String _date = "2020-01-01";
+  int _taskCount;
+
+  @override
+  void initState() {
+    TaskModel().getTaskCount().then((data) {
+      setState(() {
+        _taskCount = data;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +48,31 @@ class _TaskEditState extends State<TaskEdit> {
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: 50,
-            child: Text("标题",
-                style: TextStyle(fontSize: 30, color: Colors.black54)),
-          ),
+              height: 50,
+              child: SizedBox(
+                width: 80,
+                child: TextField(
+                  autofocus: true,
+                  controller: _title,
+                  style: TextStyle(color: Colors.black54),
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.grey[600],
+                  decoration: InputDecoration(
+                    labelText: "任务名",
+                    labelStyle: TextStyle(color: Colors.black54),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black54,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                ),
+              )),
           Container(
             child: Row(
               children: <Widget>[
@@ -138,50 +178,125 @@ class _TaskEditState extends State<TaskEdit> {
             ),
           ),
           Expanded(
+            flex: 10,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 15),
+              decoration: BoxDecoration(
+                color: Colors.white70,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: TextField(
+                maxLines: null,
+                controller: _note,
+                style: TextStyle(color: Colors.black54),
+                keyboardType: TextInputType.multiline,
+                cursorColor: Colors.grey[600],
+                decoration: InputDecoration(
+                  hintText: "说点什么吧！",
+                  labelStyle: TextStyle(color: Colors.black54),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
             child: SizedBox(),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              FlatButton(
-                color: Colors.redAccent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                onPressed: _delData,
-                child: Icon(
-                  Icons.delete_forever,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-              FlatButton(
-                color: Colors.teal,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                onPressed: () {
-                  _saveData();
-                },
-                child: Icon(
-                  Icons.save,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
-              FlatButton(
-                color: Colors.lightBlue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                onPressed: () {},
-                child: Icon(
-                  Icons.keyboard_backspace,
-                  size: 35,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          )
+          widget.newTask ? newRow() : delRow(),
         ],
       ),
+    );
+  }
+
+  Row newRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        FlatButton(
+          color: Colors.teal,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          onPressed: () {
+            if (widget.index == _taskCount) {
+              _addCount();
+            }
+            _saveData();
+            widget.callback();
+          },
+          child: Icon(
+            Icons.save,
+            color: Colors.white,
+            size: 28,
+          ),
+        ),
+        FlatButton(
+          color: Colors.lightBlue,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          onPressed: widget.callback,
+          child: Icon(
+            Icons.keyboard_backspace,
+            size: 35,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row delRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        FlatButton(
+          color: Colors.redAccent,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          onPressed: () {
+            _delData();
+            _lessCount();
+            widget.callback();
+          },
+          child: Icon(
+            Icons.delete_forever,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+        FlatButton(
+          color: Colors.teal,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          onPressed: () {
+            if (widget.index == _taskCount) {
+              _addCount();
+            }
+            _saveData();
+            widget.callback();
+          },
+          child: Icon(
+            Icons.save,
+            color: Colors.white,
+            size: 28,
+          ),
+        ),
+        FlatButton(
+          color: Colors.lightBlue,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          onPressed: widget.callback,
+          child: Icon(
+            Icons.keyboard_backspace,
+            size: 35,
+            color: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 
@@ -230,18 +345,51 @@ class _TaskEditState extends State<TaskEdit> {
   }
 
   _saveData() {
-    return TaskModel(
-            index: widget.index,
-            title: "学习",
-            flag: _dailyTarget.text,
-            done: _totalTarget.text,
-            notification: _notification,
-            endDate: _date.toString().substring(0,10),
-            note: "好好学习！")
-        .saveData();
+    List<String> data = [
+      _title.text,
+      _dailyTarget.text,
+      _totalTarget.text,
+      _notification,
+      _date.toString().substring(0, 10),
+      _note.text
+    ];
+    TaskModel(
+      index: widget.index,
+      dataList: data,
+    ).saveData();
+    Future(() {
+      widget.refresh();
+    });
   }
 
-  _delData(){
-    return TaskModel(index: widget.index).delData();
+  _delData() {
+    Future(() {
+      TaskModel(index: widget.index).delData();
+    });
+
+    TaskModel().getTaskCount().then((count) {
+      for (int i = widget.index; i < count; i++) {
+        Future(() {
+          TaskModel(index: i + 1).getData().then((list) {
+            TaskModel(index: i, dataList: list).saveData();
+          });
+        });
+      }
+    });
+    Future(() {
+      widget.refresh();
+    });
+  }
+
+  _addCount() {
+    TaskModel().getTaskCount().then((count) {
+      TaskModel(taskCount: count + 1).saveTaskCount();
+    });
+  }
+
+  _lessCount() {
+    TaskModel().getTaskCount().then((count) {
+      TaskModel(taskCount: count - 1).saveTaskCount();
+    });
   }
 }

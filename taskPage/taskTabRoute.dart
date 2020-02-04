@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uptime/detailContainer.dart';
-import 'package:uptime/listContainer.dart';
-import 'package:uptime/newTask.dart';
+import 'package:uptime/taskPage/editDetailContainer.dart';
+import 'package:uptime/taskPage/listContainer.dart';
+import 'package:uptime/taskPage/newTask.dart';
+import 'package:uptime/model/taskModel.dart';
 
 class TaskTabRoute extends StatefulWidget {
   @override
@@ -11,12 +12,41 @@ class TaskTabRoute extends StatefulWidget {
 
 class _TaskTabRouteState extends State<TaskTabRoute> {
   bool _detailVisible = false;
+  bool _newTask = false;
   int _index;
+  int _taskCount = -1;
 
-  void onChangeVisible(int index) {
+  @override
+  void initState() {
+    TaskModel().getTaskCount().then((data) {
+      setState(() {
+        _taskCount = data;
+      });
+    });
+    super.initState();
+  }
+
+  //选择时显示详细
+  void onChangeVisible(int index, bool newTask) {
     setState(() {
       _index = index;
       _detailVisible = !_detailVisible;
+      _newTask = newTask;
+    });
+  }
+
+  //隐藏详细
+  void hideDetailVisible() {
+    setState(() {
+      _detailVisible = !_detailVisible;
+    });
+  }
+
+  void refreshTab() {
+    TaskModel().getTaskCount().then((data) {
+      setState(() {
+        _taskCount = data;
+      });
     });
   }
 
@@ -30,7 +60,7 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
             children: <Widget>[
               Container(
                 constraints:
-                    BoxConstraints(minHeight: 750, minWidth: double.infinity),
+                    BoxConstraints(minHeight: 720, minWidth: double.infinity),
                 padding: EdgeInsets.all(7),
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
@@ -61,23 +91,25 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height - 270,
+                      height: MediaQuery.of(context).size.height - 300,
                       width: double.infinity,
                       child: GridView.builder(
-                        itemCount: 4,
+                        itemCount: _taskCount + 1,
                         padding: EdgeInsets.zero,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 0.9,
                         ),
                         itemBuilder: (context, index) {
-                          if (index <= 2) {
+                          if (index < _taskCount) {
                             return ListContainer(
                               index: index,
                               callback: onChangeVisible,
                             );
-                          } else{
-                            return NewTask();
+                          } else {
+                            return NewTask(
+                              callback: onChangeVisible,
+                            );
                           }
                         },
                       ),
@@ -87,13 +119,16 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
               ),
             ],
           ),
-          Center(
+          Container(
             child: _detailVisible
-                ? DetailContainer(
+                ? EditDetailContainer(
+                    newTask: _newTask,
+                    callback: hideDetailVisible,
+                    refresh: refreshTab,
                     index: _index,
                   )
                 : SizedBox(),
-          )
+          ),
         ],
       ),
     );

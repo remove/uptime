@@ -15,6 +15,7 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flex(
       direction: Axis.horizontal,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         Expanded(
           child: SizedBox(
@@ -42,7 +43,7 @@ class BottomBar extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                AnalysisButton(
+                TaskButton(
                   onPress: onPress2,
                 ),
                 Positioned(
@@ -55,7 +56,28 @@ class BottomBar extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
+        Expanded(
+          child: SizedBox(
+            height: 72,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                AnalyticsButton(
+                  onPress: onPress2,
+                ),
+                Positioned(
+                  top: 51,
+                  child: Text(
+                    "统计",
+                    style: TextStyle(
+                        color: Colors.purpleAccent[100], fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

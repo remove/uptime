@@ -1,29 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskModel {
-  TaskModel({
-    @required this.index,
-    this.title,
-    this.flag,
-    this.done,
-    this.notification,
-    this.endDate,
-    this.note,
-  });
+  TaskModel({this.index, this.dataList, this.taskCount});
 
   final int index;
-  final String title;
-  final String flag;
-  final String done;
-  final String notification;
-  final String endDate;
-  final String note;
+  final List<String> dataList;
+
+  final int taskCount;
 
   saveData() async {
-    List<String> data = [title, flag, done, notification, endDate, note];
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setStringList("$index", data);
+    sharedPreferences.setStringList("$index", dataList);
   }
 
   getData() async {
@@ -35,5 +22,16 @@ class TaskModel {
   delData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove("$index");
+  }
+
+  getTaskCount() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    int data = sharedPreferences.getInt("taskCount");
+    return data;
+  }
+
+  saveTaskCount() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt("taskCount", taskCount);
   }
 }
