@@ -1,18 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uptime/model/taskModel.dart';
 
 class TaskEdit extends StatefulWidget {
   TaskEdit({
     @required this.index,
     @required this.callback,
-    @required this.refresh,
     @required this.newTask,
   });
 
+  //任务索引
   final int index;
+
+  //切换对话框是否显示
   final Function callback;
-  final Function refresh;
+
+  //是否是新建任务
   final bool newTask;
 
   @override
@@ -221,12 +225,16 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.teal,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          onPressed: () {
+          onPressed: () async {
             if (widget.index == _taskCount) {
-              _addCount();
+              await _addCount();
             }
-            _saveData();
+            await _saveData();
             widget.callback();
+            Provider.of<TaskModel>(context, listen: false)
+                .providerGetDataList();
+            Provider.of<TaskModel>(context, listen: false)
+                .providerGetTaskCount();
           },
           child: Icon(
             Icons.save,
@@ -257,10 +265,14 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.redAccent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          onPressed: () {
-            _delData();
-            _lessCount();
+          onPressed: () async {
+            await _delData();
+            await _lessCount();
             widget.callback();
+            Provider.of<TaskModel>(context, listen: false)
+                .providerGetDataList();
+            Provider.of<TaskModel>(context, listen: false)
+                .providerGetTaskCount();
           },
           child: Icon(
             Icons.delete_forever,
@@ -272,12 +284,13 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.teal,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          onPressed: () {
-            if (widget.index == _taskCount) {
-              _addCount();
-            }
-            _saveData();
+          onPressed: () async {
+            await _saveData();
             widget.callback();
+            Provider.of<TaskModel>(context, listen: false)
+                .providerGetDataList();
+            Provider.of<TaskModel>(context, listen: false)
+                .providerGetTaskCount();
           },
           child: Icon(
             Icons.save,
@@ -357,27 +370,15 @@ class _TaskEditState extends State<TaskEdit> {
       index: widget.index,
       dataList: data,
     ).saveData();
-    Future(() {
-      widget.refresh();
-    });
   }
 
   _delData() {
-    Future(() {
-      TaskModel(index: widget.index).delData();
-    });
-
     TaskModel().getTaskCount().then((count) {
       for (int i = widget.index; i < count; i++) {
-        Future(() {
-          TaskModel(index: i + 1).getData().then((list) {
-            TaskModel(index: i, dataList: list).saveData();
-          });
+        TaskModel(index: i + 1).getData().then((list) {
+          TaskModel(index: i, dataList: list).saveData();
         });
       }
-    });
-    Future(() {
-      widget.refresh();
     });
   }
 

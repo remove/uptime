@@ -1,12 +1,38 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TaskModel {
+class TaskModel with ChangeNotifier {
   TaskModel({this.index, this.dataList, this.taskCount});
 
   final int index;
   final List<String> dataList;
+  List<List> _pGetDataList;
+  int _pGetTaskCount = 0;
+
+  List<List> get pGetDataList => _pGetDataList;
+
+  int get pGetTaskCount => _pGetTaskCount;
 
   final int taskCount;
+
+  providerGetDataList() async {
+    _pGetDataList = List();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    int count = sharedPreferences.getInt("taskCount");
+    if (count > 0) {
+      for (int i = 0; i <= count - 1; i++) {
+        List datalist = sharedPreferences.getStringList(i.toString());
+        _pGetDataList.add(datalist);
+      }
+    }
+    notifyListeners();
+  }
+
+  providerGetTaskCount() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    _pGetTaskCount = sharedPreferences.getInt("taskCount");
+    notifyListeners();
+  }
 
   saveData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

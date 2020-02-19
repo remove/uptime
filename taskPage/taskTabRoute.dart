@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:uptime/taskPage/editDetailContainer.dart';
 import 'package:uptime/taskPage/listContainer.dart';
 import 'package:uptime/taskPage/newTask.dart';
@@ -14,15 +15,10 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
   bool _detailVisible = false;
   bool _newTask = false;
   int _index;
-  int _taskCount = -1;
 
   @override
   void initState() {
-    TaskModel().getTaskCount().then((data) {
-      setState(() {
-        _taskCount = data;
-      });
-    });
+//    providerFlash();
     super.initState();
   }
 
@@ -35,18 +31,15 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
     });
   }
 
+  void providerFlash() {
+    Provider.of<TaskModel>(context, listen: false).providerGetDataList();
+    Provider.of<TaskModel>(context, listen: false).providerGetTaskCount();
+  }
+
   //隐藏详细
   void hideDetailVisible() {
     setState(() {
       _detailVisible = !_detailVisible;
-    });
-  }
-
-  void refreshTab() {
-    TaskModel().getTaskCount().then((data) {
-      setState(() {
-        _taskCount = data;
-      });
     });
   }
 
@@ -93,25 +86,29 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height - 300,
                       width: double.infinity,
-                      child: GridView.builder(
-                        itemCount: _taskCount + 1,
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.9,
+                      child: Consumer(
+                        builder: (context, TaskModel taskModel, _) =>
+                            GridView.builder(
+                          itemCount: taskModel.pGetTaskCount + 1,
+                          padding: EdgeInsets.zero,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.9,
+                          ),
+                          itemBuilder: (context, index) {
+                            if (index < taskModel.pGetTaskCount) {
+                              return ListContainer(
+                                index: index,
+                                callback: onChangeVisible,
+                              );
+                            } else {
+                              return NewTask(
+                                callback: onChangeVisible,
+                              );
+                            }
+                          },
                         ),
-                        itemBuilder: (context, index) {
-                          if (index < _taskCount) {
-                            return ListContainer(
-                              index: index,
-                              callback: onChangeVisible,
-                            );
-                          } else {
-                            return NewTask(
-                              callback: onChangeVisible,
-                            );
-                          }
-                        },
                       ),
                     ),
                   ],
@@ -124,7 +121,6 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
                 ? EditDetailContainer(
                     newTask: _newTask,
                     callback: hideDetailVisible,
-                    refresh: refreshTab,
                     index: _index,
                   )
                 : SizedBox(),

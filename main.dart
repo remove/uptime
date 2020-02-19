@@ -1,12 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:uptime/analyticsPage/analyticsTab.dart';
+import 'package:uptime/model/taskModel.dart';
 import 'package:uptime/taskPage/taskTabRoute.dart';
 import 'package:uptime/bottomBar.dart';
 import 'package:uptime/timeCountPage/timeConuntPage.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(ChangeNotifierProvider<TaskModel>(
+    create: (_) => TaskModel(),
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -34,6 +41,13 @@ class AppHome extends StatefulWidget {
 class _MyAppState extends State<AppHome> {
   List _bodyList = [TimeCountPage(), AnalyticsTab(), TaskTabRoute()];
   int _index = 0;
+
+  @override
+  void initState() {
+    Provider.of<TaskModel>(context, listen: false).providerGetDataList();
+    Provider.of<TaskModel>(context, listen: false).providerGetTaskCount();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

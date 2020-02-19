@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:uptime/taskPage/taskEdit.dart';
 
 class EditDetailContainer extends StatefulWidget {
-  EditDetailContainer(
-      {@required this.index,
-      @required this.callback,
-      @required this.refresh,
-      @required this.newTask});
+  EditDetailContainer({
+    @required this.index,
+    @required this.callback,
+    @required this.newTask,
+  });
 
+  //任务索引
   final int index;
+
+  //切换编辑对话框是否显示
   final callback;
-  final refresh;
+
+  //是否是新建任务
   final bool newTask;
 
   @override
@@ -99,7 +103,6 @@ class _EditDetailContainerState extends State<EditDetailContainer> {
                   child: _detail
                       ? TaskEdit(
                           newTask: widget.newTask,
-                          refresh: widget.refresh,
                           callback: widget.callback,
                           index: widget.index,
                         )
