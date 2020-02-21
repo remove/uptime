@@ -1,36 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uptime/model/taskModel.dart';
 
-class NewTask extends StatefulWidget {
-  NewTask({
-    @required this.callback,
-  });
+class NewTask extends StatelessWidget {
+  NewTask({@required this.callback});
 
   final callback;
 
   @override
-  _NewTaskState createState() => _NewTaskState();
-}
-
-class _NewTaskState extends State<NewTask> {
-  int _taskCount;
-
-  @override
-  void initState() {
-    TaskModel().getTaskCount().then((data) {
-      setState(() {
-        _taskCount = data;
-      });
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.callback(_taskCount,true);
-      },
+    return Consumer(
+      builder: (context, TaskModel taskModel, child) => GestureDetector(
+        onTap: () {
+          callback(taskModel.pGetTaskCount, true);
+        },
+        child: child,
+      ),
       child: Container(
         margin: EdgeInsets.all(7),
         decoration: BoxDecoration(

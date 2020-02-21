@@ -44,8 +44,7 @@ class _MyAppState extends State<AppHome> {
 
   @override
   void initState() {
-    Provider.of<TaskModel>(context, listen: false).providerGetDataList();
-    Provider.of<TaskModel>(context, listen: false).providerGetTaskCount();
+    Provider.of<TaskModel>(context, listen: false).providerInitData();
     super.initState();
   }
 

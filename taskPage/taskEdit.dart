@@ -34,11 +34,7 @@ class _TaskEditState extends State<TaskEdit> {
 
   @override
   void initState() {
-    TaskModel().getTaskCount().then((data) {
-      setState(() {
-        _taskCount = data;
-      });
-    });
+    _taskCount = Provider.of<TaskModel>(context, listen: false).pGetTaskCount;
     super.initState();
   }
 
@@ -373,24 +369,18 @@ class _TaskEditState extends State<TaskEdit> {
   }
 
   _delData() {
-    TaskModel().getTaskCount().then((count) {
-      for (int i = widget.index; i < count; i++) {
-        TaskModel(index: i + 1).getData().then((list) {
-          TaskModel(index: i, dataList: list).saveData();
-        });
-      }
-    });
+    for (int i = widget.index; i < _taskCount; i++) {
+      TaskModel(index: i + 1).getData().then((list) {
+        TaskModel(index: i, dataList: list).saveData();
+      });
+    }
   }
 
   _addCount() {
-    TaskModel().getTaskCount().then((count) {
-      TaskModel(taskCount: count + 1).saveTaskCount();
-    });
+    TaskModel(taskCount: _taskCount + 1).saveTaskCount();
   }
 
   _lessCount() {
-    TaskModel().getTaskCount().then((count) {
-      TaskModel(taskCount: count - 1).saveTaskCount();
-    });
+    TaskModel(taskCount: _taskCount - 1).saveTaskCount();
   }
 }

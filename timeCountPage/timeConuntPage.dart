@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uptime/model/taskModel.dart';
 
 import 'ball.dart';
 
@@ -12,18 +11,9 @@ class TimeCountPage extends StatefulWidget {
 
 class _TimeCountPageState extends State<TimeCountPage> {
   String _choice = "选择任务";
-  bool _firstLaunch = true;
 
   @override
   Widget build(BuildContext context) {
-    if (_firstLaunch) {
-      TaskModel().getTaskCount().then((data) {
-        if (data == null) {
-          TaskModel(taskCount: 0).saveTaskCount();
-        }
-        _firstLaunch = false;
-      });
-    }
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Expanded(
       child: Column(

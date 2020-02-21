@@ -16,12 +16,6 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
   bool _newTask = false;
   int _index;
 
-  @override
-  void initState() {
-//    providerFlash();
-    super.initState();
-  }
-
   //选择时显示详细
   void onChangeVisible(int index, bool newTask) {
     setState(() {
@@ -29,11 +23,6 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
       _detailVisible = !_detailVisible;
       _newTask = newTask;
     });
-  }
-
-  void providerFlash() {
-    Provider.of<TaskModel>(context, listen: false).providerGetDataList();
-    Provider.of<TaskModel>(context, listen: false).providerGetTaskCount();
   }
 
   //隐藏详细
@@ -86,30 +75,7 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height - 300,
                       width: double.infinity,
-                      child: Consumer(
-                        builder: (context, TaskModel taskModel, _) =>
-                            GridView.builder(
-                          itemCount: taskModel.pGetTaskCount + 1,
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.9,
-                          ),
-                          itemBuilder: (context, index) {
-                            if (index < taskModel.pGetTaskCount) {
-                              return ListContainer(
-                                index: index,
-                                callback: onChangeVisible,
-                              );
-                            } else {
-                              return NewTask(
-                                callback: onChangeVisible,
-                              );
-                            }
-                          },
-                        ),
-                      ),
+                      child: taskList(),
                     ),
                   ],
                 ),
@@ -126,6 +92,29 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
                 : SizedBox(),
           ),
         ],
+      ),
+    );
+  }
+
+  Consumer<TaskModel> taskList() {
+    return Consumer(
+      builder: (context, TaskModel taskModel, _) => GridView.builder(
+        itemCount: taskModel.pGetTaskCount + 1,
+        padding: EdgeInsets.zero,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: 0.9),
+        itemBuilder: (context, index) {
+          if (index < taskModel.pGetTaskCount) {
+            return ListContainer(
+              index: index,
+              callback: onChangeVisible,
+            );
+          } else {
+            return NewTask(
+              callback: onChangeVisible,
+            );
+          }
+        },
       ),
     );
   }

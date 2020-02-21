@@ -15,6 +15,20 @@ class TaskModel with ChangeNotifier {
 
   final int taskCount;
 
+  providerInitData() async {
+    await initTaskCount();
+    providerGetDataList();
+    providerGetTaskCount();
+  }
+
+  initTaskCount() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    int data = sharedPreferences.getInt("taskCount");
+    if (data == null) {
+      TaskModel(taskCount: 0).saveTaskCount();
+    }
+  }
+
   providerGetDataList() async {
     _pGetDataList = List();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -48,12 +62,6 @@ class TaskModel with ChangeNotifier {
   delData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove("$index");
-  }
-
-  getTaskCount() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    int data = sharedPreferences.getInt("taskCount");
-    return data;
   }
 
   saveTaskCount() async {

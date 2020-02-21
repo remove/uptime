@@ -54,79 +54,75 @@ class ListContainerState extends State<ListContainer> {
               minWidth: double.infinity,
               minHeight: 60,
             ),
-            child: Consumer(
-              builder: (context, TaskModel taskModel, _) => Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 30,
-                    child: Text(
-                        taskModel.pGetDataList[widget.index].toList()[0],
-                        style: TextStyle(fontSize: 20, color: Colors.black54)),
-                  ),
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.flag, color: Colors.black54, size: 20),
-                        Text("今天目标", style: TextStyle(color: Colors.black54)),
-                        Expanded(child: SizedBox()),
-                        Text(
-                            "0/" +
-                                taskModel.pGetDataList[widget.index]
-                                    .toList()[1],
-                            style: TextStyle(color: Colors.black54)),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 4),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.timer, color: Colors.black54, size: 20),
-                        Text("总计完成", style: TextStyle(color: Colors.black54)),
-                        Expanded(child: SizedBox()),
-                        Text(
-                            "0/" +
-                                taskModel.pGetDataList[widget.index]
-                                    .toList()[2],
-                            style: TextStyle(color: Colors.black54)),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 4),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.notifications,
-                            color: Colors.black54, size: 20),
-                        Text("重复提醒", style: TextStyle(color: Colors.black54)),
-                        Expanded(child: SizedBox()),
-                        Text(taskModel.pGetDataList[widget.index].toList()[3],
-                            style: TextStyle(color: Colors.black54)),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 4),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.date_range, color: Colors.black54, size: 20),
-                        Text("结束日期", style: TextStyle(color: Colors.black54)),
-                        Expanded(child: SizedBox()),
-                        Text(taskModel.pGetDataList[widget.index].toList()[4],
-                            style: TextStyle(color: Colors.black54)),
-                      ],
-                    ),
-                  ),
-                  Text("-------------------------",
-                      overflow: TextOverflow.fade,
-                      maxLines: 1,
-                      style: TextStyle(color: Colors.black54)),
-                  Text(taskModel.pGetDataList[widget.index].toList()[5],
-                      style: TextStyle(color: Colors.black54))
-                ],
-              ),
+            child: buildList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Consumer<TaskModel> buildList() {
+    return Consumer(
+      builder: (context, TaskModel taskModel, _) => Column(
+        children: <Widget>[
+          SizedBox(
+            height: 30,
+            child: Text(taskModel.pGetDataList[widget.index].toList()[0],
+                style: TextStyle(fontSize: 20, color: Colors.black54)),
+          ),
+          Container(
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.flag, color: Colors.black54, size: 20),
+                Text("今天目标", style: TextStyle(color: Colors.black54)),
+                Expanded(child: SizedBox()),
+                Text("0/" + taskModel.pGetDataList[widget.index].toList()[1],
+                    style: TextStyle(color: Colors.black54)),
+              ],
             ),
           ),
+          Container(
+            padding: EdgeInsets.only(top: 4),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.timer, color: Colors.black54, size: 20),
+                Text("总计完成", style: TextStyle(color: Colors.black54)),
+                Expanded(child: SizedBox()),
+                Text("0/" + taskModel.pGetDataList[widget.index].toList()[2],
+                    style: TextStyle(color: Colors.black54)),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 4),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.notifications, color: Colors.black54, size: 20),
+                Text("重复提醒", style: TextStyle(color: Colors.black54)),
+                Expanded(child: SizedBox()),
+                Text(taskModel.pGetDataList[widget.index].toList()[3],
+                    style: TextStyle(color: Colors.black54)),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 4),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.date_range, color: Colors.black54, size: 20),
+                Text("结束日期", style: TextStyle(color: Colors.black54)),
+                Expanded(child: SizedBox()),
+                Text(taskModel.pGetDataList[widget.index].toList()[4],
+                    style: TextStyle(color: Colors.black54)),
+              ],
+            ),
+          ),
+          Text("-------------------------",
+              overflow: TextOverflow.fade,
+              maxLines: 1,
+              style: TextStyle(color: Colors.black54)),
+          Text(taskModel.pGetDataList[widget.index].toList()[5],
+              style: TextStyle(color: Colors.black54))
         ],
       ),
     );
