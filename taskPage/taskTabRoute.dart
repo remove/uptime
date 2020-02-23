@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:uptime/model/providerModel.dart';
 import 'package:uptime/taskPage/editDetailContainer.dart';
 import 'package:uptime/taskPage/listContainer.dart';
 import 'package:uptime/taskPage/newTask.dart';
-import 'package:uptime/model/taskModel.dart';
 
 class TaskTabRoute extends StatefulWidget {
   @override
@@ -96,15 +96,15 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
     );
   }
 
-  Consumer<TaskModel> taskList() {
+  Consumer<ProviderModel> taskList() {
     return Consumer(
-      builder: (context, TaskModel taskModel, _) => GridView.builder(
-        itemCount: taskModel.pGetTaskCount + 1,
+      builder: (context, ProviderModel providerModel, _) => GridView.builder(
+        itemCount: providerModel.taskCount + 1,
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: 0.9),
         itemBuilder: (context, index) {
-          if (index < taskModel.pGetTaskCount) {
+          if (index < providerModel.taskCount) {
             return ListContainer(
               index: index,
               callback: onChangeVisible,

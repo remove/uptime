@@ -57,7 +57,7 @@ class _TimeCountPageState extends State<TimeCountPage> {
   }
 
   _showNotificationPicker(BuildContext context) {
-    var names = ['', '学习', '运动', '阅读'];
+    var names = ['选择任务', '学习', '运动', '阅读'];
     final picker = CupertinoPicker(
       itemExtent: 30,
       onSelectedItemChanged: (position) {

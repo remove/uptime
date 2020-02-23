@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uptime/model/providerModel.dart';
 import 'package:uptime/model/taskModel.dart';
 
 class TaskEdit extends StatefulWidget {
@@ -34,7 +35,8 @@ class _TaskEditState extends State<TaskEdit> {
 
   @override
   void initState() {
-    _taskCount = Provider.of<TaskModel>(context, listen: false).pGetTaskCount;
+    _taskCount =
+        Provider.of<ProviderModel>(context, listen: false).taskCount;
     super.initState();
   }
 
@@ -227,10 +229,8 @@ class _TaskEditState extends State<TaskEdit> {
             }
             await _saveData();
             widget.callback();
-            Provider.of<TaskModel>(context, listen: false)
-                .providerGetDataList();
-            Provider.of<TaskModel>(context, listen: false)
-                .providerGetTaskCount();
+            Provider.of<ProviderModel>(context, listen: false).getDataList();
+            Provider.of<ProviderModel>(context, listen: false).getTaskCount();
           },
           child: Icon(
             Icons.save,
@@ -265,10 +265,8 @@ class _TaskEditState extends State<TaskEdit> {
             await _delData();
             await _lessCount();
             widget.callback();
-            Provider.of<TaskModel>(context, listen: false)
-                .providerGetDataList();
-            Provider.of<TaskModel>(context, listen: false)
-                .providerGetTaskCount();
+            Provider.of<ProviderModel>(context, listen: false).getDataList();
+            Provider.of<ProviderModel>(context, listen: false).getTaskCount();
           },
           child: Icon(
             Icons.delete_forever,
@@ -283,10 +281,8 @@ class _TaskEditState extends State<TaskEdit> {
           onPressed: () async {
             await _saveData();
             widget.callback();
-            Provider.of<TaskModel>(context, listen: false)
-                .providerGetDataList();
-            Provider.of<TaskModel>(context, listen: false)
-                .providerGetTaskCount();
+            Provider.of<ProviderModel>(context, listen: false).getDataList();
+            Provider.of<ProviderModel>(context, listen: false).getTaskCount();
           },
           child: Icon(
             Icons.save,

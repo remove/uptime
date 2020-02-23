@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uptime/model/taskModel.dart';
+import 'package:uptime/model/providerModel.dart';
 
 class NewTask extends StatelessWidget {
   NewTask({@required this.callback});
@@ -10,9 +10,9 @@ class NewTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (context, TaskModel taskModel, child) => GestureDetector(
+      builder: (context, ProviderModel providerModel, child) => GestureDetector(
         onTap: () {
-          callback(taskModel.pGetTaskCount, true);
+          callback(providerModel.taskCount, true);
         },
         child: child,
       ),

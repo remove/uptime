@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uptime/analyticsPage/analyticsTab.dart';
-import 'package:uptime/model/taskModel.dart';
+import 'package:uptime/model/providerModel.dart';
 import 'package:uptime/taskPage/taskTabRoute.dart';
 import 'package:uptime/bottomBar.dart';
 import 'package:uptime/timeCountPage/timeConuntPage.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider<TaskModel>(
-    create: (_) => TaskModel(),
+  runApp(ChangeNotifierProvider<ProviderModel>(
+    create: (_) => ProviderModel(),
     child: MyApp(),
   ));
 }
@@ -44,7 +44,7 @@ class _MyAppState extends State<AppHome> {
 
   @override
   void initState() {
-    Provider.of<TaskModel>(context, listen: false).providerInitData();
+    Provider.of<ProviderModel>(context, listen: false).initData();
     super.initState();
   }
 
