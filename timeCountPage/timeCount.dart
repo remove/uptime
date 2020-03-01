@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uptime/model/dataModel.dart';
+import 'package:uptime/model/providerModel.dart';
 
 class TimeCount extends StatefulWidget {
   TimeCount({Key key}) : super(key: key);
@@ -17,8 +20,8 @@ class TimeCountState extends State<TimeCount> {
   bool _relaxTimeState = false;
   bool _visible = false;
   bool _pause = false;
-  int _workTimeCount = 1500;
-  int _relaxTimeCount = 300;
+  int _workTimeCount = 3;
+  int _relaxTimeCount = 2;
 
   String _note = "长按结束";
 
@@ -53,6 +56,7 @@ class TimeCountState extends State<TimeCount> {
             _relaxTime();
             //发送消息
             TimeCountNotification(signal: true).dispatch(context);
+            _taskDone();
             return;
           }
           setState(() {
@@ -132,6 +136,21 @@ class TimeCountState extends State<TimeCount> {
     setState(() {
       _pause = false;
     });
+  }
+
+  void _taskDone() async {
+    int index = Provider.of<ProviderModel>(context, listen: false).timingTask;
+    if (index > -1) {
+      DataModel().getScheduleList(index).then((list) {
+        int i = int.parse(list[0]);
+        int j = int.parse(list[1]);
+        i++;
+        j++;
+        List<String> done = [i.toString(), j.toString()];
+        DataModel().saveScheduleList(index, done);
+        Provider.of<ProviderModel>(context, listen: false).getScheduleList();
+      });
+    }
   }
 
   @override

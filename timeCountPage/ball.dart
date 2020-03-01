@@ -93,6 +93,7 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    //Todo 修改为回调而非用监听冒泡通知
     return NotificationListener<TimeCountNotification>(
       onNotification: (onNotification) {
         if (onNotification.signal) {

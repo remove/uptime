@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uptime/model/providerModel.dart';
 
 class TodayGoalPanel extends StatefulWidget {
   @override
@@ -37,23 +39,25 @@ class _TodayGoalPanelState extends State<TodayGoalPanel> {
               style: TextStyle(color: Colors.black54),
             ),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    "2",
-                    style: TextStyle(color: Colors.black26, fontSize: 30),
-                  ),
-                  Text(
-                    "/",
-                    style: TextStyle(color: Colors.black26, fontSize: 35),
-                  ),
-                  Text(
-                    "10",
-                    style: TextStyle(color: Colors.blue, fontSize: 35),
-                  ),
-                ],
+              child: Consumer(
+                builder: (context, ProviderModel providerModel, _) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      providerModel.todayGoalSchedule.toString(),
+                      style: TextStyle(color: Colors.black26, fontSize: 30),
+                    ),
+                    Text(
+                      "/",
+                      style: TextStyle(color: Colors.black26, fontSize: 35),
+                    ),
+                    Text(
+                      providerModel.todayGoal.toString(),
+                      style: TextStyle(color: Colors.blue, fontSize: 35),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

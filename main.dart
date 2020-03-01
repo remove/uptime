@@ -39,7 +39,7 @@ class AppHome extends StatefulWidget {
 }
 
 class _MyAppState extends State<AppHome> {
-  List _bodyList = [TimeCountPage(), AnalyticsTab(), TaskTabRoute()];
+  List<Widget> _bodyList = [TimeCountPage(), AnalyticsTab(), TaskTabRoute()];
   int _index = 0;
 
   @override
@@ -53,21 +53,29 @@ class _MyAppState extends State<AppHome> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          _bodyList[_index],
+          Expanded(
+            child: IndexedStack(
+              index: _index,
+              children: _bodyList,
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(bottom: 50),
             child: BottomBar(
               onPress1: () {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
                 setState(() {
                   _index = 0;
                 });
               },
               onPress2: () {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
                 setState(() {
                   _index = 1;
                 });
               },
               onPress3: () {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
                 setState(() {
                   _index = 2;
                 });

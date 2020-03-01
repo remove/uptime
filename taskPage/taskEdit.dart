@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uptime/model/providerModel.dart';
-import 'package:uptime/model/taskModel.dart';
+import 'package:uptime/model/dataModel.dart';
 
 class TaskEdit extends StatefulWidget {
   TaskEdit({
@@ -35,8 +35,7 @@ class _TaskEditState extends State<TaskEdit> {
 
   @override
   void initState() {
-    _taskCount =
-        Provider.of<ProviderModel>(context, listen: false).taskCount;
+    _taskCount = Provider.of<ProviderModel>(context, listen: false).taskCount;
     super.initState();
   }
 
@@ -223,14 +222,16 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.teal,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          //TODO 整合保存操作
           onPressed: () async {
             if (widget.index == _taskCount) {
               await _addCount();
             }
             await _saveData();
+            await _newTask();
+            await _newScheduleList();
             widget.callback();
-            Provider.of<ProviderModel>(context, listen: false).getDataList();
-            Provider.of<ProviderModel>(context, listen: false).getTaskCount();
+            flashProvider();
           },
           child: Icon(
             Icons.save,
@@ -261,12 +262,14 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.redAccent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          //TODO 整合删除操作
           onPressed: () async {
             await _delData();
             await _lessCount();
+            await _delTask();
+            await _delScheduleList();
             widget.callback();
-            Provider.of<ProviderModel>(context, listen: false).getDataList();
-            Provider.of<ProviderModel>(context, listen: false).getTaskCount();
+            flashProvider();
           },
           child: Icon(
             Icons.delete_forever,
@@ -280,9 +283,9 @@ class _TaskEditState extends State<TaskEdit> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           onPressed: () async {
             await _saveData();
+            await _editTask();
             widget.callback();
-            Provider.of<ProviderModel>(context, listen: false).getDataList();
-            Provider.of<ProviderModel>(context, listen: false).getTaskCount();
+            flashProvider();
           },
           child: Icon(
             Icons.save,
@@ -358,25 +361,54 @@ class _TaskEditState extends State<TaskEdit> {
       _date.toString().substring(0, 10),
       _note.text
     ];
-    TaskModel(
-      index: widget.index,
-      dataList: data,
-    ).saveData();
+    DataModel().saveData(data, widget.index);
+  }
+
+  _newScheduleList() {
+    DataModel().saveScheduleList(widget.index, ["0", "0"]);
+  }
+
+  _newTask() {
+    DataModel().newTask(_title.text);
+  }
+
+  _editTask() {
+    DataModel().editTask(widget.index, _title.text);
+  }
+
+  _delTask() {
+    DataModel().delTask(widget.index);
   }
 
   _delData() {
     for (int i = widget.index; i < _taskCount; i++) {
-      TaskModel(index: i + 1).getData().then((list) {
-        TaskModel(index: i, dataList: list).saveData();
+      DataModel().getData(i + 1).then((list) {
+        DataModel().saveData(list, i);
+      });
+    }
+  }
+
+  _delScheduleList() {
+    for (int i = widget.index; i < _taskCount; i++) {
+      DataModel().getScheduleList(i + 1).then((list) {
+        DataModel().saveScheduleList(i, list);
       });
     }
   }
 
   _addCount() {
-    TaskModel(taskCount: _taskCount + 1).saveTaskCount();
+    DataModel().saveTaskCount(_taskCount + 1);
   }
 
   _lessCount() {
-    TaskModel(taskCount: _taskCount - 1).saveTaskCount();
+    DataModel().saveTaskCount(_taskCount - 1);
+  }
+
+  //TODO 难看，得改改
+  flashProvider() {
+    Provider.of<ProviderModel>(context, listen: false).getDataList();
+    Provider.of<ProviderModel>(context, listen: false).getTaskCount();
+    Provider.of<ProviderModel>(context, listen: false).getTaskList();
+    Provider.of<ProviderModel>(context, listen: false).getScheduleList();
   }
 }

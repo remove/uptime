@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uptime/model/providerModel.dart';
 
 class TomatoCountPanel extends StatefulWidget {
   @override
@@ -37,23 +39,25 @@ class _TomatoCountPanelState extends State<TomatoCountPanel> {
               style: TextStyle(color: Colors.black54),
             ),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    "55",
-                    style: TextStyle(color: Colors.black26, fontSize: 30),
-                  ),
-                  Text(
-                    "/",
-                    style: TextStyle(color: Colors.black26, fontSize: 35),
-                  ),
-                  Text(
-                    "200",
-                    style: TextStyle(color: Colors.deepOrange, fontSize: 35),
-                  ),
-                ],
+              child: Consumer(
+                builder: (context, ProviderModel providerModel, _) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      providerModel.tomatoSchedule.toString(),
+                      style: TextStyle(color: Colors.black26, fontSize: 30),
+                    ),
+                    Text(
+                      "/",
+                      style: TextStyle(color: Colors.black26, fontSize: 35),
+                    ),
+                    Text(
+                      providerModel.tomatoGoal.toString(),
+                      style: TextStyle(color: Colors.deepOrange, fontSize: 35),
+                    ),
+                  ],
+                ),
               ),
             )
           ],
