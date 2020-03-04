@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uptime/analyticsPage/tomatoBar.dart';
+import 'package:uptime/model/providerModel.dart';
 
 class TomatoPanel extends StatefulWidget {
   @override
@@ -42,18 +44,27 @@ class _TomatoPanelState extends State<TomatoPanel> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                TomatoBar(height: 4),
-                TomatoBar(height: 8),
-                TomatoBar(height: 5),
-                TomatoBar(height: 10),
-                TomatoBar(height: 12),
-                TomatoBar(height: 6),
-                TomatoBar(height: 7),
-              ],
+            child: Consumer(
+              builder: (context, ProviderModel providerModel, _) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TomatoBar(
+                      height: int.parse(providerModel.tomatoAnalysisList[6])),
+                  TomatoBar(
+                      height: int.parse(providerModel.tomatoAnalysisList[5])),
+                  TomatoBar(
+                      height: int.parse(providerModel.tomatoAnalysisList[4])),
+                  TomatoBar(
+                      height: int.parse(providerModel.tomatoAnalysisList[3])),
+                  TomatoBar(
+                      height: int.parse(providerModel.tomatoAnalysisList[2])),
+                  TomatoBar(
+                      height: int.parse(providerModel.tomatoAnalysisList[1])),
+                  TomatoBar(
+                      height: int.parse(providerModel.tomatoAnalysisList[0])),
+                ],
+              ),
             ),
           ),
         ],

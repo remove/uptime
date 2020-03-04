@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uptime/analyticsPage/taskBar.dart';
+import 'package:uptime/model/providerModel.dart';
 
 class TaskPanel extends StatefulWidget {
   @override
@@ -15,17 +17,14 @@ class _TaskPanelState extends State<TaskPanel> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0, 20),
-              blurRadius: 30)
+              color: Colors.black12, offset: Offset(0, 20), blurRadius: 30)
         ],
         color: Colors.white,
         borderRadius: BorderRadius.all(
           Radius.circular(20),
         ),
       ),
-      constraints: BoxConstraints(
-          maxHeight: 200, minWidth: double.infinity),
+      constraints: BoxConstraints(maxHeight: 200, minWidth: double.infinity),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -45,18 +44,20 @@ class _TaskPanelState extends State<TaskPanel> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                TaskBar(height: 3),
-                TaskBar(height: 4),
-                TaskBar(height: 2),
-                TaskBar(height: 6),
-                TaskBar(height: 5),
-                TaskBar(height: 3),
-                TaskBar(height: 4)
-              ],
+            child: Consumer(
+              builder: (context, ProviderModel providerModel, _) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TaskBar(height: int.parse(providerModel.taskAnalysisList[6])),
+                  TaskBar(height: int.parse(providerModel.taskAnalysisList[5])),
+                  TaskBar(height: int.parse(providerModel.taskAnalysisList[4])),
+                  TaskBar(height: int.parse(providerModel.taskAnalysisList[3])),
+                  TaskBar(height: int.parse(providerModel.taskAnalysisList[2])),
+                  TaskBar(height: int.parse(providerModel.taskAnalysisList[1])),
+                  TaskBar(height: int.parse(providerModel.taskAnalysisList[0])),
+                ],
+              ),
             ),
           ),
         ],

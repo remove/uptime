@@ -369,7 +369,7 @@ class _TaskEditState extends State<TaskEdit> {
   }
 
   _newTask() {
-    DataModel().newTask(_title.text);
+    DataModel().saveTask(_title.text);
   }
 
   _editTask() {
@@ -404,11 +404,9 @@ class _TaskEditState extends State<TaskEdit> {
     DataModel().saveTaskCount(_taskCount - 1);
   }
 
-  //TODO 难看，得改改
   flashProvider() {
     Provider.of<ProviderModel>(context, listen: false).getDataList();
     Provider.of<ProviderModel>(context, listen: false).getTaskCount();
     Provider.of<ProviderModel>(context, listen: false).getTaskList();
-    Provider.of<ProviderModel>(context, listen: false).getScheduleList();
   }
 }

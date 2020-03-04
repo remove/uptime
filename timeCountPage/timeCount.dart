@@ -141,15 +141,13 @@ class TimeCountState extends State<TimeCount> {
   void _taskDone() async {
     int index = Provider.of<ProviderModel>(context, listen: false).timingTask;
     if (index > -1) {
-      DataModel().getScheduleList(index).then((list) {
-        int i = int.parse(list[0]);
-        int j = int.parse(list[1]);
-        i++;
-        j++;
-        List<String> done = [i.toString(), j.toString()];
-        DataModel().saveScheduleList(index, done);
-        Provider.of<ProviderModel>(context, listen: false).getScheduleList();
-      });
+      await DataModel().updateScheduleList(index);
+      await DataModel().saveTomatoAnalysisList();
+      await DataModel().decisionTaskAnalysisListUpdate(index);
+      Provider.of<ProviderModel>(context, listen: false)
+          .getTomatoAnalysisList();
+      Provider.of<ProviderModel>(context, listen: false).getScheduleList();
+      Provider.of<ProviderModel>(context, listen: false).getTaskAnalysisList();
     }
   }
 
