@@ -79,7 +79,7 @@ class ListContainerState extends State<ListContainer> {
                 Text(
                     providerModel.scheduleList[widget.index][0] +
                         "/" +
-                        providerModel.dataList[widget.index][1],
+                        trans(providerModel.dataList[widget.index][1]),
                     style: TextStyle(color: Colors.black54)),
               ],
             ),
@@ -94,7 +94,7 @@ class ListContainerState extends State<ListContainer> {
                 Text(
                     providerModel.scheduleList[widget.index][1] +
                         "/" +
-                        providerModel.dataList[widget.index][2],
+                        trans(providerModel.dataList[widget.index][2]),
                     style: TextStyle(color: Colors.black54)),
               ],
             ),
@@ -132,5 +132,12 @@ class ListContainerState extends State<ListContainer> {
         ],
       ),
     );
+  }
+
+  String trans(String data) {
+    if (data.startsWith("0")) {
+      return "无限";
+    }
+    return data;
   }
 }

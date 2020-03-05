@@ -6,7 +6,7 @@ import 'package:uptime/model/launchDataInitModel.dart';
 
 class ProviderModel with ChangeNotifier {
   List<List> _dataList;
-  List<String> _taskList;
+  List<String> _taskList = ["选择任务"];
   List<List> _scheduleList;
   List<String> _tomatoAnalysisList = ["0", "0", "0", "0", "0", "0", "0"];
   List<String> _taskAnalysisList = ["0", "0", "0", "0", "0", "0", "0"];
@@ -58,8 +58,8 @@ class ProviderModel with ChangeNotifier {
     getTaskAnalysisList();
     getDataList();
     getScheduleList();
-    getTaskCount();
     getTaskList();
+    getTaskCount();
   }
 
   ///[index]=>选定任务索引

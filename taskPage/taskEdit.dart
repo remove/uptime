@@ -63,6 +63,12 @@ class _TaskEditState extends State<TaskEdit> {
         ).dataList[widget.index][5];
       });
     }
+    if (_dailyGoal.startsWith("0")) {
+      _dailyGoal = "无限";
+    }
+    if (_totalGoal.startsWith("0")) {
+      _totalGoal = "无限";
+    }
   }
 
   @override
@@ -111,8 +117,18 @@ class _TaskEditState extends State<TaskEdit> {
                   onTap: () {
                     _showDailyGoalPicker(context);
                   },
-                  child: Text(_dailyGoal + " 个",
-                      style: TextStyle(color: Colors.black54, fontSize: 20)),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        _dailyGoal,
+                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                      ),
+                      Text(
+                        " /个",
+                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -129,8 +145,18 @@ class _TaskEditState extends State<TaskEdit> {
                   onTap: () {
                     _showTotalTargetPicker(context);
                   },
-                  child: Text(_totalGoal + " 个",
-                      style: TextStyle(color: Colors.black54, fontSize: 20)),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        _totalGoal,
+                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                      ),
+                      Text(
+                        " /个",
+                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -307,6 +333,12 @@ class _TaskEditState extends State<TaskEdit> {
     if (_title.text.isEmpty) {
       _title.text = "未命名";
     }
+    if (_dailyGoal.contains("无限")) {
+      _dailyGoal = "0";
+    }
+    if (_totalGoal.contains("无限")) {
+      _totalGoal = "0";
+    }
     List<String> data = [
       _title.text,
       _dailyGoal,
@@ -348,11 +380,20 @@ class _TaskEditState extends State<TaskEdit> {
     final picker = CupertinoPicker(
       itemExtent: 28,
       onSelectedItemChanged: (index) {
+        if (index == 0) {
+          setState(() {
+            _dailyGoal = "无限";
+          });
+          return;
+        }
         setState(() {
           _dailyGoal = list[index].toString();
         });
       },
       children: list.map((e) {
+        if (e == 0) {
+          return Text("无限");
+        }
         return Text(e.toString());
       }).toList(),
     );
@@ -368,21 +409,27 @@ class _TaskEditState extends State<TaskEdit> {
   }
 
   _showTotalTargetPicker(BuildContext context) {
-    List<String> list = List.generate(1000, (index) {
-      if (index == 0) {
-        return "无限";
-      }
-      return index.toString();
+    List<int> list = List.generate(1000, (index) {
+      return index;
     });
     final picker = CupertinoPicker(
       itemExtent: 28,
       onSelectedItemChanged: (index) {
+        if (index == 0) {
+          setState(() {
+            _totalGoal = "无限";
+          });
+          return;
+        }
         setState(() {
-          _totalGoal = list[index];
+          _totalGoal = list[index].toString();
         });
       },
       children: list.map((e) {
-        return Text(e);
+        if (e == 0) {
+          return Text("无限");
+        }
+        return Text(e.toString());
       }).toList(),
     );
     showCupertinoModalPopup(
@@ -397,7 +444,7 @@ class _TaskEditState extends State<TaskEdit> {
   }
 
   _showNotificationPicker(BuildContext context) {
-    var names = ['', '每天', '从不'];
+    var names = ['每天', '从不'];
     final picker = CupertinoPicker(
       itemExtent: 30,
       onSelectedItemChanged: (position) {

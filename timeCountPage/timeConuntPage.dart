@@ -42,10 +42,7 @@ class _TimeCountPageState extends State<TimeCountPage> {
                     },
                     child: Consumer(
                       builder: (context, ProviderModel providerModel, _) =>
-                          Text(
-                        providerModel.taskList[_taskIndex],
-                        style: TextStyle(color: Colors.black54),
-                      ),
+                          choice(providerModel),
                     ),
                   ),
                 ),
@@ -57,21 +54,33 @@ class _TimeCountPageState extends State<TimeCountPage> {
     );
   }
 
+  Widget choice(ProviderModel data) {
+    if (_taskIndex > data.taskCount) {
+      return Text(
+        data.taskList[0],
+        style: TextStyle(color: Colors.black54),
+      );
+    }
+    return Text(
+      data.taskList[_taskIndex],
+      style: TextStyle(color: Colors.black54),
+    );
+  }
+
   _showNotificationPicker(BuildContext context) {
-    final picker = Consumer(
-      builder: (context, ProviderModel providerModel, _) => CupertinoPicker(
-        itemExtent: 30,
-        onSelectedItemChanged: (index) {
-          setState(() {
-            _taskIndex = index;
-          });
-          Provider.of<ProviderModel>(context, listen: false)
-              .setTimingTask(index - 1);
-        },
-        children: providerModel.taskList.map((e) {
-          return Text(e);
-        }).toList(),
-      ),
+    final picker = CupertinoPicker(
+      itemExtent: 30,
+      onSelectedItemChanged: (index) {
+        setState(() {
+          _taskIndex = index;
+        });
+        Provider.of<ProviderModel>(context, listen: false)
+            .setTimingTask(index - 1);
+      },
+      children:
+          Provider.of<ProviderModel>(context, listen: false).taskList.map((e) {
+        return Text(e);
+      }).toList(),
     );
     showCupertinoModalPopup(
       context: context,
