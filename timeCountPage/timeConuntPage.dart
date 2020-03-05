@@ -11,7 +11,7 @@ class TimeCountPage extends StatefulWidget {
 }
 
 class _TimeCountPageState extends State<TimeCountPage> {
-  String _choice = "选择任务";
+  int _taskIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,12 @@ class _TimeCountPageState extends State<TimeCountPage> {
                     onPressed: () {
                       _showNotificationPicker(context);
                     },
-                    child: Text(
-                      "$_choice",
-                      style: TextStyle(color: Colors.black54),
+                    child: Consumer(
+                      builder: (context, ProviderModel providerModel, _) =>
+                          Text(
+                        providerModel.taskList[_taskIndex],
+                        style: TextStyle(color: Colors.black54),
+                      ),
                     ),
                   ),
                 ),
@@ -60,7 +63,7 @@ class _TimeCountPageState extends State<TimeCountPage> {
         itemExtent: 30,
         onSelectedItemChanged: (index) {
           setState(() {
-            _choice = providerModel.taskList[index];
+            _taskIndex = index;
           });
           Provider.of<ProviderModel>(context, listen: false)
               .setTimingTask(index - 1);

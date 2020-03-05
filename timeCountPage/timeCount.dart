@@ -7,7 +7,9 @@ import 'package:uptime/model/dataModel.dart';
 import 'package:uptime/model/providerModel.dart';
 
 class TimeCount extends StatefulWidget {
-  TimeCount({Key key}) : super(key: key);
+  TimeCount({Key key, @required this.callback}) : super(key: key);
+
+  final Function callback;
 
   @override
   TimeCountState createState() => TimeCountState();
@@ -20,8 +22,8 @@ class TimeCountState extends State<TimeCount> {
   bool _relaxTimeState = false;
   bool _visible = false;
   bool _pause = false;
-  int _workTimeCount = 3;
-  int _relaxTimeCount = 2;
+  int _workTimeCount = 1500;
+  int _relaxTimeCount = 300;
 
   String _note = "长按结束";
 
@@ -37,7 +39,7 @@ class TimeCountState extends State<TimeCount> {
             //重置为工作状态
             _resetToWorkTime();
             //发送消息
-            TimeCountNotification(signal: false).dispatch(context);
+            widget.callback(false);
             return;
           }
           setState(() {
@@ -55,7 +57,7 @@ class TimeCountState extends State<TimeCount> {
             //进入休息状态
             _relaxTime();
             //发送消息
-            TimeCountNotification(signal: true).dispatch(context);
+            widget.callback(true);
             _taskDone();
             return;
           }
@@ -195,10 +197,4 @@ class TimeCountState extends State<TimeCount> {
       ),
     );
   }
-}
-
-class TimeCountNotification extends Notification {
-  TimeCountNotification({this.signal});
-
-  final bool signal;
 }

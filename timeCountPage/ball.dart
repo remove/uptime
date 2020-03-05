@@ -58,6 +58,16 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
     });
   }
 
+  _timingStatus(bool relax) {
+    if (relax) {
+      _relaxAnimated();
+      _relaxTime = true;
+      return;
+    }
+    _startAnimated();
+    _relaxTime = false;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -93,57 +103,45 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    //Todo 修改为回调而非用监听冒泡通知
-    return NotificationListener<TimeCountNotification>(
-      onNotification: (onNotification) {
-        if (onNotification.signal) {
-          _relaxAnimated();
-          _relaxTime = true;
-          return false;
+    return GestureDetector(
+      //判断是否计时状态
+      onTap: () {
+        if (!_play) {
+          //开始计时
+          _globalKey.currentState.startTime();
+          _startAnimated();
+          _play = true;
         }
-        _startAnimated();
-        _relaxTime = false;
-        return false;
       },
-      child: GestureDetector(
-        //判断是否计时状态
-        onTap: () {
-          if (!_play) {
-            //开始计时
-            _globalKey.currentState.startTime();
-            _startAnimated();
-            _play = true;
-          }
-        },
-        onLongPress: () {
-          //取消计时
-          _globalKey.currentState.cancelTime();
-          _cancelAnimated();
-          _play = false;
-        },
-        child: AnimatedContainer(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(300)),
-            gradient: RadialGradient(
-              colors: [_color1, _color2],
-              center: Alignment.topLeft,
-              radius: 1.1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: _shadowC,
-                blurRadius: _radius,
-                offset: Offset(_offsetX, _offsetY),
-              )
-            ],
+      onLongPress: () {
+        //取消计时
+        _globalKey.currentState.cancelTime();
+        _cancelAnimated();
+        _play = false;
+      },
+      child: AnimatedContainer(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(300)),
+          gradient: RadialGradient(
+            colors: [_color1, _color2],
+            center: Alignment.topLeft,
+            radius: 1.1,
           ),
-          duration: Duration(milliseconds: 1000),
-          curve: Curves.elasticOut,
-          height: _boxHeight,
-          width: _boxWidth,
-          child: TimeCount(
-            key: _globalKey,
-          ),
+          boxShadow: [
+            BoxShadow(
+              color: _shadowC,
+              blurRadius: _radius,
+              offset: Offset(_offsetX, _offsetY),
+            )
+          ],
+        ),
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.elasticOut,
+        height: _boxHeight,
+        width: _boxWidth,
+        child: TimeCount(
+          callback: _timingStatus,
+          key: _globalKey,
         ),
       ),
     );

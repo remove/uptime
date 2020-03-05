@@ -78,12 +78,12 @@ class ProviderModel with ChangeNotifier {
         _dataList.add(datalist);
       }
     }
+
     ///生成并刷新当前目标及总计番茄数
     getTodayGoal();
     getTomatoGoal();
     notifyListeners();
   }
-
 
   ///获取完成进度数列表
   getScheduleList() async {
@@ -97,6 +97,7 @@ class ProviderModel with ChangeNotifier {
         _scheduleList.add(scheduleList);
       }
     }
+
     ///生成并刷新当天已完成的目标数及完成总数
     getTodayGoalSchedule();
     getTomatoSchedule();

@@ -26,17 +26,43 @@ class TaskEdit extends StatefulWidget {
 
 class _TaskEditState extends State<TaskEdit> {
   TextEditingController _title = TextEditingController();
-  TextEditingController _dailyTarget = TextEditingController();
-  TextEditingController _totalTarget = TextEditingController();
   TextEditingController _note = TextEditingController();
   String _notification = "每天";
   String _date = "2020-01-01";
+  String _dailyGoal = "0";
+  String _totalGoal = "0";
+  String _labelText = "任务名";
+  String _hintText = "说点什么吧！";
   int _taskCount;
 
   @override
   void initState() {
     _taskCount = Provider.of<ProviderModel>(context, listen: false).taskCount;
+    _initData();
     super.initState();
+  }
+
+  _initData() {
+    if (!widget.newTask) {
+      setState(() {
+        _labelText = Provider.of<ProviderModel>(
+          context,
+          listen: false,
+        ).dataList[widget.index][0];
+        _dailyGoal = Provider.of<ProviderModel>(
+          context,
+          listen: false,
+        ).dataList[widget.index][1];
+        _totalGoal = Provider.of<ProviderModel>(
+          context,
+          listen: false,
+        ).dataList[widget.index][2];
+        _hintText = Provider.of<ProviderModel>(
+          context,
+          listen: false,
+        ).dataList[widget.index][5];
+      });
+    }
   }
 
   @override
@@ -51,15 +77,14 @@ class _TaskEditState extends State<TaskEdit> {
           SizedBox(
               height: 50,
               child: SizedBox(
-                width: 80,
+                width: 200,
                 child: TextField(
-                  autofocus: true,
                   controller: _title,
                   style: TextStyle(color: Colors.black54),
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.grey[600],
                   decoration: InputDecoration(
-                    labelText: "任务名",
+                    labelText: _labelText,
                     labelStyle: TextStyle(color: Colors.black54),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -75,36 +100,20 @@ class _TaskEditState extends State<TaskEdit> {
                 ),
               )),
           Container(
+            padding: EdgeInsets.only(top: 10),
             child: Row(
               children: <Widget>[
                 Icon(Icons.flag, color: Colors.black54, size: 30),
                 Text("每天目标",
                     style: TextStyle(color: Colors.black54, fontSize: 20)),
                 Expanded(child: SizedBox()),
-                SizedBox(
-                  width: 58,
-                  height: 35,
-                  child: TextField(
-                    controller: _dailyTarget,
-                    style: TextStyle(color: Colors.black54),
-                    keyboardType: TextInputType.number,
-                    cursorColor: Colors.grey[600],
-                    decoration: InputDecoration(
-                      labelText: "个数",
-                      labelStyle: TextStyle(color: Colors.black54),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black54,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+                GestureDetector(
+                  onTap: () {
+                    _showDailyGoalPicker(context);
+                  },
+                  child: Text(_dailyGoal + " 个",
+                      style: TextStyle(color: Colors.black54, fontSize: 20)),
+                ),
               ],
             ),
           ),
@@ -116,28 +125,12 @@ class _TaskEditState extends State<TaskEdit> {
                 Text("总计目标",
                     style: TextStyle(color: Colors.black54, fontSize: 20)),
                 Expanded(child: SizedBox()),
-                SizedBox(
-                  height: 35,
-                  width: 58,
-                  child: TextField(
-                    controller: _totalTarget,
-                    keyboardType: TextInputType.number,
-                    cursorColor: Colors.black54,
-                    decoration: InputDecoration(
-                      labelText: "个数",
-                      labelStyle: TextStyle(color: Colors.black54),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black54,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                  ),
+                GestureDetector(
+                  onTap: () {
+                    _showTotalTargetPicker(context);
+                  },
+                  child: Text(_totalGoal + " 个",
+                      style: TextStyle(color: Colors.black54, fontSize: 20)),
                 ),
               ],
             ),
@@ -197,7 +190,7 @@ class _TaskEditState extends State<TaskEdit> {
                 keyboardType: TextInputType.multiline,
                 cursorColor: Colors.grey[600],
                 decoration: InputDecoration(
-                  hintText: "说点什么吧！",
+                  hintText: _hintText,
                   labelStyle: TextStyle(color: Colors.black54),
                   border: InputBorder.none,
                 ),
@@ -222,17 +215,7 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.teal,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          //TODO 整合保存操作
-          onPressed: () async {
-            if (widget.index == _taskCount) {
-              await _addCount();
-            }
-            await _saveData();
-            await _newTask();
-            await _newScheduleList();
-            widget.callback();
-            flashProvider();
-          },
+          onPressed: _new,
           child: Icon(
             Icons.save,
             color: Colors.white,
@@ -262,15 +245,7 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.redAccent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          //TODO 整合删除操作
-          onPressed: () async {
-            await _delData();
-            await _lessCount();
-            await _delTask();
-            await _delScheduleList();
-            widget.callback();
-            flashProvider();
-          },
+          onPressed: _del,
           child: Icon(
             Icons.delete_forever,
             color: Colors.white,
@@ -281,12 +256,7 @@ class _TaskEditState extends State<TaskEdit> {
           color: Colors.teal,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          onPressed: () async {
-            await _saveData();
-            await _editTask();
-            widget.callback();
-            flashProvider();
-          },
+          onPressed: _edit,
           child: Icon(
             Icons.save,
             color: Colors.white,
@@ -305,6 +275,124 @@ class _TaskEditState extends State<TaskEdit> {
           ),
         ),
       ],
+    );
+  }
+
+  _new() async {
+    await _saveData();
+    await DataModel().saveScheduleList(widget.index, ["0", "0"]);
+    await DataModel().saveTask(_title.text);
+    await DataModel().saveTaskCount(_taskCount + 1);
+    widget.callback();
+    _flashProvider();
+  }
+
+  _edit() async {
+    await _saveData();
+    await DataModel().editTask(widget.index, _title.text);
+    widget.callback();
+    _flashProvider();
+  }
+
+  _del() async {
+    await _delData();
+    await _delScheduleList();
+    await DataModel().delTask(widget.index);
+    await DataModel().saveTaskCount(_taskCount - 1);
+    widget.callback();
+    _flashProvider();
+  }
+
+  _saveData() {
+    if (_title.text.isEmpty) {
+      _title.text = "未命名";
+    }
+    List<String> data = [
+      _title.text,
+      _dailyGoal,
+      _totalGoal,
+      _notification,
+      _date.toString().substring(0, 10),
+      _note.text
+    ];
+    DataModel().saveData(data, widget.index);
+  }
+
+  _delData() {
+    for (int i = widget.index; i < _taskCount; i++) {
+      DataModel().getData(i + 1).then((list) {
+        DataModel().saveData(list, i);
+      });
+    }
+  }
+
+  _delScheduleList() {
+    for (int i = widget.index; i < _taskCount; i++) {
+      DataModel().getScheduleList(i + 1).then((list) {
+        DataModel().saveScheduleList(i, list);
+      });
+    }
+  }
+
+  _flashProvider() {
+    Provider.of<ProviderModel>(context, listen: false).getDataList();
+    Provider.of<ProviderModel>(context, listen: false).getScheduleList();
+    Provider.of<ProviderModel>(context, listen: false).getTaskCount();
+    Provider.of<ProviderModel>(context, listen: false).getTaskList();
+  }
+
+  _showDailyGoalPicker(BuildContext context) {
+    List<int> list = List.generate(50, (index) {
+      return index;
+    });
+    final picker = CupertinoPicker(
+      itemExtent: 28,
+      onSelectedItemChanged: (index) {
+        setState(() {
+          _dailyGoal = list[index].toString();
+        });
+      },
+      children: list.map((e) {
+        return Text(e.toString());
+      }).toList(),
+    );
+    showCupertinoModalPopup(
+      context: context,
+      builder: (cxt) {
+        return Container(
+          height: 300,
+          child: picker,
+        );
+      },
+    );
+  }
+
+  _showTotalTargetPicker(BuildContext context) {
+    List<String> list = List.generate(1000, (index) {
+      if (index == 0) {
+        return "无限";
+      }
+      return index.toString();
+    });
+    final picker = CupertinoPicker(
+      itemExtent: 28,
+      onSelectedItemChanged: (index) {
+        setState(() {
+          _totalGoal = list[index];
+        });
+      },
+      children: list.map((e) {
+        return Text(e);
+      }).toList(),
+    );
+    showCupertinoModalPopup(
+      context: context,
+      builder: (cxt) {
+        return Container(
+          height: 300,
+          child: picker,
+        );
+      },
     );
   }
 
@@ -350,63 +438,5 @@ class _TaskEditState extends State<TaskEdit> {
         );
       },
     );
-  }
-
-  _saveData() {
-    List<String> data = [
-      _title.text,
-      _dailyTarget.text,
-      _totalTarget.text,
-      _notification,
-      _date.toString().substring(0, 10),
-      _note.text
-    ];
-    DataModel().saveData(data, widget.index);
-  }
-
-  _newScheduleList() {
-    DataModel().saveScheduleList(widget.index, ["0", "0"]);
-  }
-
-  _newTask() {
-    DataModel().saveTask(_title.text);
-  }
-
-  _editTask() {
-    DataModel().editTask(widget.index, _title.text);
-  }
-
-  _delTask() {
-    DataModel().delTask(widget.index);
-  }
-
-  _delData() {
-    for (int i = widget.index; i < _taskCount; i++) {
-      DataModel().getData(i + 1).then((list) {
-        DataModel().saveData(list, i);
-      });
-    }
-  }
-
-  _delScheduleList() {
-    for (int i = widget.index; i < _taskCount; i++) {
-      DataModel().getScheduleList(i + 1).then((list) {
-        DataModel().saveScheduleList(i, list);
-      });
-    }
-  }
-
-  _addCount() {
-    DataModel().saveTaskCount(_taskCount + 1);
-  }
-
-  _lessCount() {
-    DataModel().saveTaskCount(_taskCount - 1);
-  }
-
-  flashProvider() {
-    Provider.of<ProviderModel>(context, listen: false).getDataList();
-    Provider.of<ProviderModel>(context, listen: false).getTaskCount();
-    Provider.of<ProviderModel>(context, listen: false).getTaskList();
   }
 }

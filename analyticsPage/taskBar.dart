@@ -16,7 +16,7 @@ class TaskBar extends StatelessWidget {
     if (height > 0) {
       return Container(
         width: 30,
-        height: height * 10.toDouble(),
+        height: height * 30.toDouble(),
         decoration: BoxDecoration(
           color: Colors.blue,
           borderRadius: BorderRadius.only(
