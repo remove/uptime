@@ -21,7 +21,7 @@ class AnalyticsTab extends StatelessWidget {
         ),
         Expanded(
           child: Center(
-            child: Column(
+            child: ListView(
               children: <Widget>[
                 Row(
                   children: <Widget>[

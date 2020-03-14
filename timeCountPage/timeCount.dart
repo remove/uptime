@@ -25,8 +25,8 @@ class TimeCountState extends State<TimeCount> {
   bool _relaxTimeState = false;
   bool _visible = false;
   bool _pause = false;
-  int _workTimeCount = 1500;
-  int _relaxTimeCount = 300;
+  int _workTimeCount = 3;
+  int _relaxTimeCount = 5;
 
   String _note = "长按结束";
 
@@ -155,14 +155,13 @@ class TimeCountState extends State<TimeCount> {
       Provider.of<ProviderModel>(context, listen: false).getTaskAnalysisList();
     }
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
+        '1', '休息提醒', '休息通知提醒',
         importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-        0, '梁力定制版', '梁力你仲得唔得？', platformChannelSpecifics,
-        payload: 'item x');
+        0, '小果断', '果冻完成了，休息一下吧！', platformChannelSpecifics);
   }
 
   @override

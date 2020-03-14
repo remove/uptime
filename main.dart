@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +17,12 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 void main() async {
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
+  if (Platform.isAndroid) {
+    SystemUiOverlayStyle style = SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark);
+    SystemChrome.setSystemUIOverlayStyle(style);
+  }
   runApp(ChangeNotifierProvider<ProviderModel>(
     create: (_) => ProviderModel(),
     child: MyApp(),

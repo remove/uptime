@@ -1,6 +1,9 @@
 # uptime
 >Required package:
+- provider
 - shared_preferences
+- flutter_screenutil
+- flutter_local_notifications
 <div  align="center">
 <img src="https://i.loli.net/2020/02/04/fiJKrQXldpBvWT8.jpg" height="500px" alt="main" >
 <img src="https://i.loli.net/2020/03/05/9nrezbitEC6KPNJ.jpg" height="500px" alt="analysis" >
