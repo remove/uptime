@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
-import 'package:uptime/analyticsPage/taskBar.dart';
-import 'package:uptime/model/providerModel.dart';
+
+import 'taskBar.dart';
 
 class TaskPanel extends StatefulWidget {
   @override

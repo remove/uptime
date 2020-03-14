@@ -1,14 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:littledecisive/analyticsPage/analyticsTab.dart';
 import 'package:provider/provider.dart';
-import 'package:uptime/analyticsPage/analyticsTab.dart';
-import 'package:uptime/model/providerModel.dart';
-import 'package:uptime/taskPage/taskTabRoute.dart';
-import 'package:uptime/bottomBar.dart';
-import 'package:uptime/timeCountPage/timeConuntPage.dart';
 
-void main() {
+import 'bottomBar.dart';
+import 'model/providerModel.dart';
+import 'taskPage/taskTabRoute.dart';
+import 'timeCountPage/timeConuntPage.dart';
+
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+void main() async {
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
   runApp(ChangeNotifierProvider<ProviderModel>(
     create: (_) => ProviderModel(),
     child: MyApp(),
@@ -45,6 +51,11 @@ class _MyAppState extends State<AppHome> {
   @override
   void initState() {
     Provider.of<ProviderModel>(context, listen: false).initData();
+    var initializationSettingsAndroid = AndroidInitializationSettings('flag');
+    var initializationSettingsIOS = IOSInitializationSettings();
+    var initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
     super.initState();
   }
 
@@ -75,7 +86,8 @@ class _MyAppState extends State<AppHome> {
                 });
               },
               onPress3: () {
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+                SystemChrome.setSystemUIOverlayStyle(
+                    SystemUiOverlayStyle.light);
                 setState(() {
                   _index = 2;
                 });

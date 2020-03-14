@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
-import 'package:uptime/model/providerModel.dart';
 
 import 'ball.dart';
 

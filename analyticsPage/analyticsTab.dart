@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:uptime/analyticsPage/taskPanel.dart';
-import 'package:uptime/analyticsPage/todayGoalPanel.dart';
-import 'package:uptime/analyticsPage/tomatoCountPanel.dart';
-import 'package:uptime/analyticsPage/tomatoPanel.dart';
+
+import 'taskPanel.dart';
+import 'todayGoalPanel.dart';
+import 'tomatoCountPanel.dart';
+import 'tomatoPanel.dart';
 
 class AnalyticsTab extends StatelessWidget {
   @override

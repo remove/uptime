@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
-import 'package:uptime/model/providerModel.dart';
-import 'package:uptime/taskPage/editDetailContainer.dart';
-import 'package:uptime/taskPage/listContainer.dart';
-import 'package:uptime/taskPage/newTask.dart';
+
+import 'editDetailContainer.dart';
+import 'listContainer.dart';
+import 'newTask.dart';
 
 class TaskTabRoute extends StatefulWidget {
   @override

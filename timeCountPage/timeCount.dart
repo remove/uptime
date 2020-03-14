@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:littledecisive/model/dataModel.dart';
+import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
-import 'package:uptime/model/dataModel.dart';
-import 'package:uptime/model/providerModel.dart';
+
+import '../main.dart';
 
 class TimeCount extends StatefulWidget {
   TimeCount({Key key, @required this.callback}) : super(key: key);
@@ -151,6 +154,15 @@ class TimeCountState extends State<TimeCount> {
       Provider.of<ProviderModel>(context, listen: false).getScheduleList();
       Provider.of<ProviderModel>(context, listen: false).getTaskAnalysisList();
     }
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0, '梁力定制版', '梁力你仲得唔得？', platformChannelSpecifics,
+        payload: 'item x');
   }
 
   @override

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uptime/model/firstLaunchDataInitModel.dart';
-import 'package:uptime/model/launchDataInitModel.dart';
+
+import 'firstLaunchDataInitModel.dart';
+import 'launchDataInitModel.dart';
 
 class ProviderModel with ChangeNotifier {
   List<List> _dataList;

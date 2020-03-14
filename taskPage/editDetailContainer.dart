@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uptime/taskPage/taskEdit.dart';
+import 'package:littledecisive/taskPage/taskEdit.dart';
 
 class EditDetailContainer extends StatefulWidget {
   EditDetailContainer({

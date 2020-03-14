@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
-import 'package:uptime/analyticsPage/tomatoBar.dart';
-import 'package:uptime/model/providerModel.dart';
+
+import 'tomatoBar.dart';
 
 class TomatoPanel extends StatefulWidget {
   @override
