@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
 
@@ -20,10 +21,10 @@ class _TimeCountPageState extends State<TimeCountPage> {
       children: <Widget>[
         Padding(
           child: Text(
-            "Aero",
-            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+            "计时",
+            style: TextStyle(fontSize: ScreenUtil().setSp(70), fontWeight: FontWeight.bold),
           ),
-          padding: EdgeInsets.only(top: 50, left: 20),
+          padding: EdgeInsets.only(top: ScreenUtil.statusBarHeight, left: ScreenUtil().setWidth(40)),
         ),
         Expanded(
           child: Center(
@@ -32,7 +33,7 @@ class _TimeCountPageState extends State<TimeCountPage> {
               children: <Widget>[
                 Ball(),
                 Padding(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
                   child: FlatButton(
                     color: Colors.black12,
                     shape: RoundedRectangleBorder(
@@ -86,7 +87,7 @@ class _TimeCountPageState extends State<TimeCountPage> {
       context: context,
       builder: (cxt) {
         return Container(
-          height: 200,
+          height: ScreenUtil().setHeight(400),
           child: picker,
         );
       },

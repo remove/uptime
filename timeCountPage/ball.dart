@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'timeCount.dart';
 
@@ -12,8 +13,8 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
   double _radius = 13.0;
   double _offsetX = 3.0;
   double _offsetY = 5.0;
-  double _boxHeight = 250.0;
-  double _boxWidth = 250.0;
+  double _boxHeight = ScreenUtil().setHeight(500);
+  double _boxWidth = ScreenUtil().setWidth(500);
   Color _color1 = Colors.yellow[700];
   Color _color2 = Colors.deepOrange;
   Color _shadowC = Colors.deepOrange[500];
@@ -27,8 +28,8 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
       _color1 = Colors.orangeAccent;
       _color2 = Colors.red;
       _shadowC = Colors.red;
-      _boxWidth = 330;
-      _boxHeight = 330;
+      _boxWidth = ScreenUtil().setWidth(650);
+      _boxHeight = ScreenUtil().setHeight(650);
     });
   }
 
@@ -54,8 +55,8 @@ class _BallState extends State<Ball> with WidgetsBindingObserver {
       _color1 = Colors.yellow[700];
       _color2 = Colors.deepOrange;
       _shadowC = Colors.deepOrange[500];
-      _boxWidth = 250;
-      _boxHeight = 250;
+      _boxWidth = ScreenUtil().setWidth(500);
+      _boxHeight = ScreenUtil().setHeight(500);
     });
   }
 

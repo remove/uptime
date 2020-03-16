@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TimeButton extends StatefulWidget {
   TimeButton({@required this.onPress});
@@ -114,7 +115,7 @@ class _TimeButtonState extends State<TimeButton> with WidgetsBindingObserver {
           child: AnimatedContainer(
             margin: EdgeInsets.only(top: _offset, left: _offset),
             duration: Duration(milliseconds: 50),
-            constraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+            constraints: BoxConstraints(maxHeight: ScreenUtil().setHeight(100), maxWidth: ScreenUtil().setWidth(100)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(15)),
               boxShadow: [
@@ -257,7 +258,7 @@ class _TaskButtonState extends State<TaskButton>
           child: AnimatedContainer(
             margin: EdgeInsets.only(top: _offset, left: _offset),
             duration: Duration(milliseconds: 50),
-            constraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+            constraints: BoxConstraints(maxHeight: ScreenUtil().setHeight(100), maxWidth: ScreenUtil().setWidth(100)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(15)),
               boxShadow: [
@@ -400,7 +401,7 @@ class _AnalyticsButtonState extends State<AnalyticsButton>
           child: AnimatedContainer(
             margin: EdgeInsets.only(top: _offset, left: _offset),
             duration: Duration(milliseconds: 50),
-            constraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+            constraints: BoxConstraints(maxHeight: ScreenUtil().setHeight(100), maxWidth: ScreenUtil().setWidth(100)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(15)),
               boxShadow: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
 
@@ -39,9 +40,10 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
         Column(
           children: <Widget>[
             Container(
+              height: ScreenUtil().setHeight(1400),
               constraints:
-                  BoxConstraints(minHeight: 720, minWidth: double.infinity),
-              padding: EdgeInsets.all(7),
+                  BoxConstraints(minWidth: double.infinity),
+              padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
               decoration: BoxDecoration(
                 gradient: RadialGradient(
                   colors: [Colors.purpleAccent[100], Colors.blue],
@@ -61,17 +63,17 @@ class _TaskTabRouteState extends State<TaskTabRoute> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 40, left: 10),
+                    padding: EdgeInsets.only(top: ScreenUtil.statusBarHeight, left: ScreenUtil().setWidth(20)),
                     child: Text(
                       "任务",
                       style: TextStyle(
-                          fontSize: 35,
+                          fontSize: ScreenUtil().setSp(70),
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height - 300,
+                    height: ScreenUtil().setHeight(1180),
                     width: double.infinity,
                     child: taskList(),
                   ),

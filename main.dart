@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/analyticsPage/analyticsTab.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,6 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
   if (Platform.isAndroid) {
     SystemUiOverlayStyle style = SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -69,6 +69,7 @@ class _MyAppState extends State<AppHome> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 828, height: 1792);
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -79,7 +80,7 @@ class _MyAppState extends State<AppHome> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 50),
+            padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(100)),
             child: BottomBar(
               onPress1: () {
                 SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);

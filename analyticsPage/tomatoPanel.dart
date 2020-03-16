@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +14,15 @@ class _TomatoPanelState extends State<TomatoPanel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
-      padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+      margin: EdgeInsets.fromLTRB(
+          ScreenUtil().setWidth(40),
+          ScreenUtil().setHeight(40),
+          ScreenUtil().setWidth(40),
+          ScreenUtil().setHeight(40)),
+      padding: EdgeInsets.only(
+          top: ScreenUtil().setHeight(30),
+          left: ScreenUtil().setWidth(40),
+          right: ScreenUtil().setWidth(40)),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -25,7 +33,7 @@ class _TomatoPanelState extends State<TomatoPanel> {
           Radius.circular(20),
         ),
       ),
-      constraints: BoxConstraints(maxHeight: 200, minWidth: double.infinity),
+      constraints: BoxConstraints(maxHeight: ScreenUtil().setHeight(400), minWidth: double.infinity),
       child: Stack(
         children: <Widget>[
           Positioned(

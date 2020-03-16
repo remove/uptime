@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'bottomButton.dart';
 
@@ -22,7 +23,7 @@ class BottomBar extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: SizedBox(
-            height: 72,
+            height: ScreenUtil().setHeight(144),
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -30,10 +31,10 @@ class BottomBar extends StatelessWidget {
                   onPress: onPress1,
                 ),
                 Positioned(
-                  top: 51,
+                  top: ScreenUtil().setHeight(101),
                   child: Text(
                     "计时",
-                    style: TextStyle(color: Colors.orange[300], fontSize: 12),
+                    style: TextStyle(color: Colors.orange[300], fontSize: ScreenUtil().setSp(24)),
                   ),
                 )
               ],
@@ -42,7 +43,7 @@ class BottomBar extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: 72,
+            height: ScreenUtil().setHeight(144),
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -50,11 +51,11 @@ class BottomBar extends StatelessWidget {
                   onPress: onPress2,
                 ),
                 Positioned(
-                  top: 51,
+                  top: ScreenUtil().setHeight(101),
                   child: Text(
                     "统计",
                     style: TextStyle(
-                        color: Colors.purpleAccent[100], fontSize: 12),
+                        color: Colors.purpleAccent[100], fontSize: ScreenUtil().setSp(24)),
                   ),
                 )
               ],
@@ -63,7 +64,7 @@ class BottomBar extends StatelessWidget {
         ),
         Expanded(
           child: SizedBox(
-            height: 72,
+            height: ScreenUtil().setHeight(144),
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -71,10 +72,10 @@ class BottomBar extends StatelessWidget {
                   onPress: onPress3,
                 ),
                 Positioned(
-                  top: 51,
+                  top: ScreenUtil().setHeight(101),
                   child: Text(
                     "任务",
-                    style: TextStyle(color: Colors.blue[300], fontSize: 12),
+                    style: TextStyle(color: Colors.blue[300], fontSize: ScreenUtil().setSp(24)),
                   ),
                 )
               ],

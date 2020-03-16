@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
 
@@ -26,11 +27,15 @@ class _TodayGoalPanelState extends State<TodayGoalPanel> {
           ),
         ),
         constraints: BoxConstraints(
-          minHeight: 100,
-          maxHeight: 100,
+          minHeight: ScreenUtil().setHeight(200),
+          maxHeight: ScreenUtil().setHeight(200),
         ),
-        padding: EdgeInsets.all(15),
-        margin: EdgeInsets.only(left: 20, right: 10, bottom: 20, top: 20),
+        padding: EdgeInsets.all(ScreenUtil().setWidth(30)),
+        margin: EdgeInsets.only(
+            left: ScreenUtil().setWidth(40),
+            right: ScreenUtil().setWidth(20),
+            bottom: ScreenUtil().setHeight(40),
+            top: ScreenUtil().setHeight(40)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -46,15 +51,15 @@ class _TodayGoalPanelState extends State<TodayGoalPanel> {
                   children: <Widget>[
                     Text(
                       providerModel.todayGoalSchedule.toString(),
-                      style: TextStyle(color: Colors.black26, fontSize: 30),
+                      style: TextStyle(color: Colors.black26, fontSize: ScreenUtil().setSp(60)),
                     ),
                     Text(
                       "/",
-                      style: TextStyle(color: Colors.black26, fontSize: 35),
+                      style: TextStyle(color: Colors.black26, fontSize: ScreenUtil().setSp(70)),
                     ),
                     Text(
                       providerModel.todayGoal.toString(),
-                      style: TextStyle(color: Colors.blue, fontSize: 35),
+                      style: TextStyle(color: Colors.blue, fontSize: ScreenUtil().setSp(70)),
                     ),
                   ],
                 ),

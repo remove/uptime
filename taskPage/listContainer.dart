@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +53,7 @@ class ListContainerState extends State<ListContainer> {
             ),
             constraints: BoxConstraints(
               minWidth: double.infinity,
-              minHeight: 60,
+              minHeight: ScreenUtil().setHeight(120),
             ),
             child: buildList(),
           ),
@@ -66,69 +67,69 @@ class ListContainerState extends State<ListContainer> {
       builder: (context, ProviderModel providerModel, _) => Column(
         children: <Widget>[
           SizedBox(
-            height: 30,
+            height: ScreenUtil().setHeight(60),
             child: Text(providerModel.dataList[widget.index][0],
-                style: TextStyle(fontSize: 20, color: Colors.black54)),
+                style: TextStyle(fontSize: ScreenUtil().setSp(40), color: Colors.black54)),
           ),
           Container(
             child: Row(
               children: <Widget>[
-                Icon(Icons.flag, color: Colors.black54, size: 20),
-                Text("今天目标", style: TextStyle(color: Colors.black54)),
+                Icon(Icons.flag, color: Colors.black54, size: ScreenUtil().setWidth(40)),
+                Text("今天目标", style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
                 Expanded(child: SizedBox()),
                 Text(
                     providerModel.scheduleList[widget.index][0] +
                         "/" +
                         trans(providerModel.dataList[widget.index][1]),
-                    style: TextStyle(color: Colors.black54)),
+                    style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 4),
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(8)),
             child: Row(
               children: <Widget>[
-                Icon(Icons.timer, color: Colors.black54, size: 20),
-                Text("总计完成", style: TextStyle(color: Colors.black54)),
+                Icon(Icons.timer, color: Colors.black54, size: ScreenUtil().setWidth(40)),
+                Text("总计完成", style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
                 Expanded(child: SizedBox()),
                 Text(
                     providerModel.scheduleList[widget.index][1] +
                         "/" +
                         trans(providerModel.dataList[widget.index][2]),
-                    style: TextStyle(color: Colors.black54)),
+                    style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 4),
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(8)),
             child: Row(
               children: <Widget>[
-                Icon(Icons.notifications, color: Colors.black54, size: 20),
-                Text("重复提醒", style: TextStyle(color: Colors.black54)),
+                Icon(Icons.notifications, color: Colors.black54, size: ScreenUtil().setWidth(40)),
+                Text("重复提醒", style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
                 Expanded(child: SizedBox()),
                 Text(providerModel.dataList[widget.index][3],
-                    style: TextStyle(color: Colors.black54)),
+                    style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 4),
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(8)),
             child: Row(
               children: <Widget>[
-                Icon(Icons.date_range, color: Colors.black54, size: 20),
-                Text("结束日期", style: TextStyle(color: Colors.black54)),
+                Icon(Icons.date_range, color: Colors.black54, size: ScreenUtil().setWidth(40)),
+                Text("结束日期", style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
                 Expanded(child: SizedBox()),
                 Text(providerModel.dataList[widget.index][4],
-                    style: TextStyle(color: Colors.black54)),
+                    style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28))),
               ],
             ),
           ),
-          Text("-------------------------",
+          Text("-----------------------------------",
               overflow: TextOverflow.fade,
               maxLines: 1,
               style: TextStyle(color: Colors.black54)),
           Text(providerModel.dataList[widget.index][5],
-              style: TextStyle(color: Colors.black54))
+              style: TextStyle(color: Colors.black54,fontSize: ScreenUtil().setSp(28)))
         ],
       ),
     );

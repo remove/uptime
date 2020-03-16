@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/model/dataModel.dart';
 import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +26,8 @@ class TimeCountState extends State<TimeCount> {
   bool _relaxTimeState = false;
   bool _visible = false;
   bool _pause = false;
-  int _workTimeCount = 3;
-  int _relaxTimeCount = 5;
+  int _workTimeCount = 1500;
+  int _relaxTimeCount = 300;
 
   String _note = "长按结束";
 
@@ -177,11 +178,11 @@ class TimeCountState extends State<TimeCount> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           AnimatedPadding(
-            padding: EdgeInsets.only(top: 105),
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(210)),
             duration: Duration(milliseconds: 500),
             child: Text(
               _transSecond(),
-              style: TextStyle(color: Colors.white, fontSize: 35),
+              style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(70)),
             ),
           ),
           Visibility(
@@ -190,7 +191,7 @@ class TimeCountState extends State<TimeCount> {
               child: Icon(
                 _pause ? Icons.play_arrow : Icons.pause,
                 color: Colors.white,
-                size: 30,
+                size: ScreenUtil().setWidth(60),
               ),
               onPressed: () {
                 _pauseTime();
@@ -201,7 +202,7 @@ class TimeCountState extends State<TimeCount> {
             visible: _visible,
             child: Text(
               _note,
-              style: TextStyle(color: Colors.white, fontSize: 10),
+              style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(20)),
             ),
           )
         ],

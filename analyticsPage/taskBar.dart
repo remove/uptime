@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaskBar extends StatelessWidget {
   TaskBar({
@@ -15,8 +16,8 @@ class TaskBar extends StatelessWidget {
   Widget bar() {
     if (height > 0) {
       return Container(
-        width: 30,
-        height: height * 30.toDouble(),
+        width: ScreenUtil().setWidth(60),
+        height: ScreenUtil().setHeight(height * ScreenUtil().setHeight(120)),
         decoration: BoxDecoration(
           color: Colors.blue,
           borderRadius: BorderRadius.only(
@@ -25,14 +26,14 @@ class TaskBar extends StatelessWidget {
           ),
         ),
         constraints: BoxConstraints(
-          maxHeight: 160,
-          minHeight: 30,
+          maxHeight: ScreenUtil().setHeight(320),
+          minHeight: ScreenUtil().setHeight(60),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 7),
+              padding: EdgeInsets.only(top: ScreenUtil().setHeight(14)),
               child: Text(
                 height.toInt().toString(),
                 style: TextStyle(color: Colors.white, fontSize: 16),
@@ -43,8 +44,8 @@ class TaskBar extends StatelessWidget {
       );
     }
     return Container(
-      width: 30,
-      height: 5,
+      width: ScreenUtil().setWidth(60),
+      height: ScreenUtil().setHeight(10),
       decoration: BoxDecoration(
         color: Colors.blue,
         borderRadius: BorderRadius.only(

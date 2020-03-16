@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:littledecisive/model/dataModel.dart';
 import 'package:littledecisive/model/providerModel.dart';
 import 'package:provider/provider.dart';
@@ -75,15 +76,15 @@ class _TaskEditState extends State<TaskEdit> {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        maxWidth: 200,
-        maxHeight: 200,
+        maxWidth: ScreenUtil().setWidth(400),
+        maxHeight: ScreenUtil().setHeight(400),
       ),
       child: Column(
         children: <Widget>[
           SizedBox(
-              height: 50,
+              height: ScreenUtil().setHeight(100),
               child: SizedBox(
-                width: 200,
+                width: ScreenUtil().setWidth(400),
                 child: TextField(
                   controller: _title,
                   style: TextStyle(color: Colors.black54),
@@ -109,9 +110,9 @@ class _TaskEditState extends State<TaskEdit> {
             padding: EdgeInsets.only(top: 10),
             child: Row(
               children: <Widget>[
-                Icon(Icons.flag, color: Colors.black54, size: 30),
+                Icon(Icons.flag, color: Colors.black54, size: ScreenUtil().setSp(60)),
                 Text("每天目标",
-                    style: TextStyle(color: Colors.black54, fontSize: 20)),
+                    style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40))),
                 Expanded(child: SizedBox()),
                 GestureDetector(
                   onTap: () {
@@ -121,11 +122,11 @@ class _TaskEditState extends State<TaskEdit> {
                     children: <Widget>[
                       Text(
                         _dailyGoal,
-                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                        style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40)),
                       ),
                       Text(
                         " /个",
-                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                        style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40)),
                       ),
                     ],
                   ),
@@ -137,9 +138,9 @@ class _TaskEditState extends State<TaskEdit> {
             padding: EdgeInsets.only(top: 10),
             child: Row(
               children: <Widget>[
-                Icon(Icons.timer, color: Colors.black54, size: 30),
+                Icon(Icons.timer, color: Colors.black54, size: ScreenUtil().setSp(60)),
                 Text("总计目标",
-                    style: TextStyle(color: Colors.black54, fontSize: 20)),
+                    style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40))),
                 Expanded(child: SizedBox()),
                 GestureDetector(
                   onTap: () {
@@ -149,11 +150,11 @@ class _TaskEditState extends State<TaskEdit> {
                     children: <Widget>[
                       Text(
                         _totalGoal,
-                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                        style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40)),
                       ),
                       Text(
                         " /个",
-                        style: TextStyle(color: Colors.black54, fontSize: 20),
+                        style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40)),
                       ),
                     ],
                   ),
@@ -165,16 +166,16 @@ class _TaskEditState extends State<TaskEdit> {
             padding: EdgeInsets.only(top: 10),
             child: Row(
               children: <Widget>[
-                Icon(Icons.notifications, color: Colors.black54, size: 30),
+                Icon(Icons.notifications, color: Colors.black54, size: ScreenUtil().setSp(60)),
                 Text("重复提醒",
-                    style: TextStyle(color: Colors.black54, fontSize: 20)),
+                    style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40))),
                 Expanded(child: SizedBox()),
                 GestureDetector(
                   onTap: () {
                     _showNotificationPicker(context);
                   },
                   child: Text(_notification,
-                      style: TextStyle(color: Colors.black54, fontSize: 20)),
+                      style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40))),
                 ),
               ],
             ),
@@ -183,16 +184,16 @@ class _TaskEditState extends State<TaskEdit> {
             padding: EdgeInsets.only(top: 10),
             child: Row(
               children: <Widget>[
-                Icon(Icons.date_range, color: Colors.black54, size: 30),
+                Icon(Icons.date_range, color: Colors.black54, size: ScreenUtil().setSp(60)),
                 Text("结束日期",
-                    style: TextStyle(color: Colors.black54, fontSize: 20)),
+                    style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40))),
                 Expanded(child: SizedBox()),
                 GestureDetector(
                   onTap: () {
                     _showDatePicker(context);
                   },
                   child: Text(_date.toString().substring(0, 10),
-                      style: TextStyle(color: Colors.black54, fontSize: 20)),
+                      style: TextStyle(color: Colors.black54, fontSize: ScreenUtil().setSp(40))),
                 ),
               ],
             ),
