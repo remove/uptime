@@ -1,16 +1,17 @@
 # uptime
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+>Required package:
+- provider
+- shared_preferences
+- flutter_screenutil
+- flutter_local_notifications
+<div  align="center">
+<img src="https://i.loli.net/2020/02/04/fiJKrQXldpBvWT8.jpg" height="500px" alt="main" >
+<img src="https://i.loli.net/2020/03/05/9nrezbitEC6KPNJ.jpg" height="500px" alt="analysis" >
+<img src="https://i.loli.net/2020/02/04/6ZiyWAptFTafMLB.jpg" height="500px" alt="task" >
+</div>
+<br>
+<div  align="center">
+<img src="https://i.loli.net/2020/02/04/YCSboxN9OmGXhap.jpg" height="500px" alt="relax" >
+<img src="https://i.loli.net/2020/02/04/ugNWnItLJPOHkMw.jpg" height="500px" alt="dark" >
+<img src="https://i.loli.net/2020/02/04/MXqQF9VoDiG5mBA.jpg" height="500px" alt="edit" >
+</div>
